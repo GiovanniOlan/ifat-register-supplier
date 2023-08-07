@@ -1,0 +1,14 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+# This let Apache read the Authorization Header Bearer Token
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+RewriteCond %{REQUEST_URI} ^/.*
+RewriteRule ^(.*)$ web/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/web/
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ web/index.php

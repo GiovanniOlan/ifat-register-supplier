@@ -1,0 +1,10 @@
+#KEYS
+COOKIE_VALIDATION_KEY=
+
+#MYSQL/MARIDB
+MYSQL_DSN=mysql:host=localhost;dbname=name_database
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=
+
+#DEBUGGER[ALLOWED_IPS Must be separated by ","]
+ALLOWED_IPS=
