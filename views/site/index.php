@@ -2,16 +2,17 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = 'aa';
 ?>
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
+        <h1 class="display-4">Congratulationsaaaaaaaaa!</h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://ifat-register-supplier.test/supplier/register/personal">Iniciar registro</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://ifat-register-supplier.test/supplier/list">Ver usuarios</a></p>
     </div>
 
     <div class="body-content">
