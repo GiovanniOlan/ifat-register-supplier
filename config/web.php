@@ -25,6 +25,9 @@ $config = [
         // ],
         'user' => [
             'class' => Da\User\Module::class,
+            'classMap' => [
+                'User' => \app\models\User::class,
+            ],
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
             // 'administrators' => ['admin'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
@@ -66,13 +69,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'supplier/register/personal' => 'supplier/register-sup/personal',
-                'supplier/register/address' => 'supplier/register-sup/address',
-                'supplier/list' => 'supplier/register-sup/list',
-                // 'supplier/<action:[A-Za-z0-9-]+>' => 'supplier_register/supplier/<action>',
-                // 'supplier/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier_register/supplier/<action>',
-                // 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'supplier_register/<controller>/<action>',
-                // 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier_register/<controller>/<action>',
+                // 'supplier/register/personal' => 'supplier/register-sup/personal',
+                // 'supplier/register/address' => 'supplier/register-sup/address',
+                // 'supplier/list' => 'supplier/register-sup/list',
+                'supplier/<action:[A-Za-z0-9-]+>' => 'supplier/supplier/<action>',
+                'supplier/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/supplier/<action>',
+                'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'supplier/<controller>/<action>',
+                'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/<controller>/<action>',
                 //'supplier/register' => 'supplier_register/supplier/index'
             ],
         ],

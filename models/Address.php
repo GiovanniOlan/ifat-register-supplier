@@ -3,17 +3,20 @@
 namespace app\models;
 
 use Yii;
+use app\models\User;
+use app\models\Colonia;
 
 /**
  * This is the model class for table "address".
  *
- * @property int $add_fkuser
- * @property int $add_fkcolonia
- * @property string $add_street
- * @property string $add_exterior
- * @property string|null $add_interior
- * @property string $add_note
+ * @property int $add_fkuser Usuario
+ * @property int $add_fkcolonia Colonia
+ * @property string $add_street Calle
+ * @property string $add_exterior Número Exterior
+ * @property string|null $add_interior Número Interior
+ * @property string $add_note Notas
  *
+ * @property Colonia $addFkcolonia
  * @property User $addFkuser
  */
 class Address extends \yii\db\ActiveRecord
@@ -32,13 +35,25 @@ class Address extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['add_fkuser', 'add_fkcolonia', 'add_street', 'add_exterior', 'add_note'], 'required'],
-            [['add_fkuser', 'add_fkcolonia'], 'integer'],
-            [['add_note'], 'string'],
-            [['add_street'], 'string', 'max' => 255],
-            [['add_exterior', 'add_interior'], 'string', 'max' => 50],
-            [['add_fkuser'], 'unique'],
-            [['add_fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => UserTable::class, 'targetAttribute' => ['add_fkuser' => 'id']],
+            ['add_fkuser', 'required'],
+            ['add_fkcolonia', 'required'],
+            ['add_street', 'required'],
+            ['add_exterior', 'required'],
+            ['add_note', 'required'],
+
+            ['add_fkuser', 'integer'],
+            ['add_fkcolonia', 'integer'],
+
+            ['add_note', 'string'],
+            ['add_street', 'string', 'max' => 255],
+            ['add_exterior', 'string', 'max' => 50],
+            ['add_interior', 'string', 'max' => 50],
+
+            ['add_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['add_fkuser' => 'id']],
+            ['add_fkcolonia', 'exist', 'skipOnError' => true, 'targetClass' => Colonia::class, 'targetAttribute' => ['add_fkcolonia' => 'id']],
+
+
+
         ];
     }
 
@@ -48,13 +63,23 @@ class Address extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'add_fkuser' => Yii::t('app', 'Add Fkuser'),
-            'add_fkcolonia' => Yii::t('app', 'Add Fkcolonia'),
-            'add_street' => Yii::t('app', 'Add Street'),
-            'add_exterior' => Yii::t('app', 'Add Exterior'),
-            'add_interior' => Yii::t('app', 'Add Interior'),
-            'add_note' => Yii::t('app', 'Add Note'),
+            'add_fkuser' => Yii::t('app', 'Usuario'),
+            'add_fkcolonia' => Yii::t('app', 'Colonia'),
+            'add_street' => Yii::t('app', 'Calle'),
+            'add_exterior' => Yii::t('app', 'Número Exterior'),
+            'add_interior' => Yii::t('app', 'Número Interior'),
+            'add_note' => Yii::t('app', 'Notas'),
         ];
+    }
+
+    /**
+     * Gets query for [[AddFkcolonia]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddFkcolonia()
+    {
+        return $this->hasOne(Colonia::class, ['id' => 'add_fkcolonia']);
     }
 
     /**
@@ -64,6 +89,6 @@ class Address extends \yii\db\ActiveRecord
      */
     public function getAddFkuser()
     {
-        return $this->hasOne(UserTable::class, ['id' => 'add_fkuser']);
+        return $this->hasOne(User::class, ['id' => 'add_fkuser']);
     }
 }

@@ -7,13 +7,13 @@ use Yii;
 /**
  * This is the model class for table "supplier".
  *
- * @property int $sup_fkuser
- * @property string $sup_phone
- * @property string $sup_curp
- * @property string $sup_rfc
- * @property int $sup_status
- * @property string|null $created_at
- * @property string|null $updated_at
+ * @property int $sup_fkuser Usuario
+ * @property string $sup_phone Teléfono
+ * @property string $sup_curp CURP
+ * @property string $sup_rfc RFC
+ * @property int|null $sup_status Estado
+ * @property string $created_at Creado
+ * @property string $updated_at Actualizado
  *
  * @property User $supFkuser
  */
@@ -33,13 +33,22 @@ class Supplier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sup_fkuser', 'sup_phone', 'sup_curp', 'sup_rfc'], 'required'],
-            [['sup_fkuser', 'sup_status'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['sup_phone'], 'string', 'max' => 30],
-            [['sup_curp', 'sup_rfc'], 'string', 'max' => 50],
-            [['sup_fkuser'], 'unique'],
-            [['sup_fkuser'], 'exist', 'skipOnError' => true, 'targetClass' => UserTable::class, 'targetAttribute' => ['sup_fkuser' => 'id']],
+            ['sup_fkuser', 'required'],
+            ['sup_phone', 'required'],
+            ['sup_curp', 'required'],
+            ['sup_rfc', 'required'],
+
+            ['sup_fkuser', 'integer'],
+            ['sup_status', 'integer'],
+
+            ['created_at', 'safe'],
+            ['updated_at', 'safe'],
+
+            ['sup_phone', 'string', 'max' => 30],
+            ['sup_curp', 'string', 'max' => 50],
+            ['sup_rfc', 'string', 'max' => 50],
+            ['sup_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['sup_fkuser' => 'id']],
+
         ];
     }
 
@@ -49,13 +58,13 @@ class Supplier extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'sup_fkuser' => Yii::t('app', 'Sup Fkuser'),
-            'sup_phone' => Yii::t('app', 'Sup Phone'),
-            'sup_curp' => Yii::t('app', 'Sup Curp'),
-            'sup_rfc' => Yii::t('app', 'Sup Rfc'),
-            'sup_status' => Yii::t('app', 'Sup Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'sup_fkuser' => Yii::t('app', 'Usuario'),
+            'sup_phone' => Yii::t('app', 'Teléfono'),
+            'sup_curp' => Yii::t('app', 'CURP'),
+            'sup_rfc' => Yii::t('app', 'RFC'),
+            'sup_status' => Yii::t('app', 'Estado'),
+            'created_at' => Yii::t('app', 'Creado'),
+            'updated_at' => Yii::t('app', 'Actualizado'),
         ];
     }
 
@@ -66,6 +75,6 @@ class Supplier extends \yii\db\ActiveRecord
      */
     public function getSupFkuser()
     {
-        return $this->hasOne(UserTable::class, ['id' => 'sup_fkuser']);
+        return $this->hasOne(User::class, ['id' => 'sup_fkuser']);
     }
 }

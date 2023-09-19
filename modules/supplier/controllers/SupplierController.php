@@ -9,45 +9,49 @@ use app\models\Supplier;
 use app\models\UserTable;
 use app\models\Address;
 
-class RegisterSupController extends \yii\web\Controller
+class SupplierController extends \yii\web\Controller
 {
 
-    public function actionPersonal()
+    public function actionRegister()
     {
 
         $model = new SupplierForm();
         $model->scenario = 'personal';
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //Table user
-            $user = new UserTable();
-            $user->save();
+        $supplier = new Supplier();
+        $address = new Address();
+        $person = new Person();
 
-            //Table Person
-            $person = new Person();
-            $person->per_fkuser = $user->id;
-            $person->per_name = $model->name;
-            $person->per_lastname_paternal = $model->lastNamePaternal;
-            $person->per_lastname_maternal = $model->lastNameMaternal;
-            $person->per_gender = $model->gender;
+        $dataPost = $this->request->post();
+        if ($this->request->isPost && $supplier->load($dataPost) && $address->load($dataPost) && $person->load($dataPost)) {
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {
 
-            //Table supplier
-            $supplier = new Supplier();
-            $supplier->sup_fkuser = $user->id;
-            $supplier->sup_phone = $model->phone;
-            $supplier->sup_curp = $model->curp;
-            $supplier->sup_rfc = $model->rfc;
+                if (!$supplier->save()) {
+                    throw new \Exception();
+                }
 
-            // Verificar si todos los modelos se guardaron 
-            if ($user->save() && $person->save() && $supplier->save()) {
-                // Enviar a address action
-                return $this->redirect(['address', 'id' => $user->id]);
+                if (!$address->save()) {
+                    throw new \Exception();
+                }
+
+                if (!$person->save()) {
+                    throw new \Exception();
+                }
+
+                $transaction->commit();
+
+                // return $this->redirect(['address', 'id' => $user->id]);
+                echo '<pre>';
+                var_dump('Se guardo');
+                echo '</pre>';
+                die;
+            } catch (\Exception $e) {
+                $transaction->rollBack();
             }
         }
 
-        return $this->render('/register/personalForm', [
-            'model' => $model,
-        ]);
+        return $this->render('_person', compact('supplier', 'address', 'person'));
     }
 
     public function actionAddress($id)
@@ -81,7 +85,7 @@ class RegisterSupController extends \yii\web\Controller
             }
         }
 
-        return $this->render('/register/addressForm', [
+        return $this->render('addressForm', [
             'model' => $model,
         ]);
     }
