@@ -18,9 +18,8 @@ use app\models\User;
  */
 class Person extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    const SCENARIO_BEFORE_SAVE = 'scenario_before_save';
+
     public static function tableName()
     {
         return 'person';
@@ -32,18 +31,19 @@ class Person extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['per_fkuser', 'required'],
-            ['per_name', 'required'],
-            ['per_gender', 'required'],
-
+            ['per_fkuser', 'required', 'except' => self::SCENARIO_BEFORE_SAVE],
             ['per_fkuser', 'integer'],
-            ['per_gender', 'integer'],
-
-            ['per_name', 'string', 'max' => 40],
-            ['per_lastname_paternal', 'string', 'max' => 40],
-            ['per_lastname_maternal', 'string', 'max' => 40],
             ['per_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['per_fkuser' => 'id']],
 
+            ['per_name', 'required'],
+            ['per_name', 'string', 'max' => 40],
+
+            ['per_lastname_paternal', 'string', 'max' => 40],
+
+            ['per_lastname_maternal', 'string', 'max' => 40],
+
+            ['per_gender', 'required'],
+            ['per_gender', 'integer'],
         ];
     }
 

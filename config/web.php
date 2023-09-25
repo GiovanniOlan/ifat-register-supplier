@@ -28,6 +28,32 @@ $config = [
             'classMap' => [
                 'User' => \app\models\User::class,
             ],
+            'enableRegistration' => false,
+            'enableEmailConfirmation' => false, // Esto desactivará el envío de correos electrónicos
+            'generatePasswords' => false,
+            'allowPasswordRecovery' => false,
+            'allowAdminPasswordRecovery' => false,
+            'controllerMap' => [
+                // 'security' => [
+                //     'class' => \Da\User\Controller\SecurityController::class,
+                //     'layout' => '@app/views/layouts/auth',
+                //     'viewPath' => '@app/views/security', // Ruta a tus vistas personalizadas
+                // ],
+                'admin' => [
+                    'class' => \app\modules\da_custom\controllers\AdminController::class,
+                ],
+                'profile' => [
+                    'class' => \app\modules\da_custom\controllers\ProfileController::class,
+                ],
+                'recovery' => [
+                    'class' => \Da\User\Controller\RecoveryController::class,
+                    // 'layout' => '@app/views/layouts/auth',
+                ],
+                'registration' => [
+                    'class' => \Da\User\Controller\RegistrationController::class,
+                    // 'layout' => '@app/views/layouts/auth',
+                ]
+            ],
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
             // 'administrators' => ['admin'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
@@ -37,6 +63,13 @@ $config = [
     'components' => [
         'authManager' => [
             'class' => \yii\rbac\DbManager::class,
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@Da/User/resources/views' => '@app/modules/da_custom/views',
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

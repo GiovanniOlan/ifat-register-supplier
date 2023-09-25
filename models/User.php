@@ -24,7 +24,7 @@ class User extends BaseUser
      */
     public function getPerson()
     {
-        return $this->hasMany(Person::class, ['per_fkuser' => 'id']);
+        return $this->hasOne(Person::class, ['per_fkuser' => 'id']);
     }
 
     /**
