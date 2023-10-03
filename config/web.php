@@ -102,14 +102,11 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                // 'supplier/register/personal' => 'supplier/register-sup/personal',
-                // 'supplier/register/address' => 'supplier/register-sup/address',
-                // 'supplier/list' => 'supplier/register-sup/list',
+                //Supplier Module
                 'supplier/<action:[A-Za-z0-9-]+>' => 'supplier/supplier/<action>',
                 'supplier/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/supplier/<action>',
                 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'supplier/<controller>/<action>',
                 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/<controller>/<action>',
-                //'supplier/register' => 'supplier_register/supplier/index'
             ],
         ],
     ],

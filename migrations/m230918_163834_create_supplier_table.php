@@ -13,7 +13,7 @@ class m230918_163834_create_supplier_table extends Migration
     public function safeUp()
     {
         $this->createTable('supplier', [
-            'sup_fkuser' => $this->integer()->notNull()->comment('Usuario'),
+            'sup_fkuser' => $this->primaryKey()->comment('Usuario'),
             'sup_phone' => $this->string(30)->notNull()->comment('Teléfono'),
             'sup_curp' => $this->string(50)->notNull()->comment('CURP'),
             'sup_rfc' => $this->string(50)->notNull()->comment('RFC'),

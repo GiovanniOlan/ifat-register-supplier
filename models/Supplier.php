@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\utils\helpers\StatusHelper;
 use Yii;
 
 /**
@@ -34,21 +35,28 @@ class Supplier extends \yii\db\ActiveRecord
     {
         return [
             ['sup_fkuser', 'required'],
+            ['sup_fkuser', 'integer'],
+            ['sup_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['sup_fkuser' => 'id']],
+
             ['sup_phone', 'required'],
-            ['sup_curp', 'required'],
+            ['sup_phone', 'integer'],
+            [
+                'sup_phone', 'match', 'pattern' => '/^[0-9]{10}$/',
+                'message' => 'El número telefónico debe contener 10 dígitos.'
+            ],
+
+            ['sup_rfc', 'string', 'max' => 50],
+            ['sup_rfc', 'unique'],
             ['sup_rfc', 'required'],
 
-            ['sup_fkuser', 'integer'],
+            ['sup_curp', 'required'],
+            ['sup_curp', 'string', 'max' => 50],
+
             ['sup_status', 'integer'],
+            ['sup_status', 'in', 'range' => StatusHelper::getValues()],
 
             ['created_at', 'safe'],
             ['updated_at', 'safe'],
-
-            ['sup_phone', 'string', 'max' => 30],
-            ['sup_curp', 'string', 'max' => 50],
-            ['sup_rfc', 'string', 'max' => 50],
-            ['sup_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['sup_fkuser' => 'id']],
-
         ];
     }
 

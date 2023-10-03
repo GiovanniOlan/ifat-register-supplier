@@ -3,35 +3,39 @@
 namespace app\modules\supplier\controllers;
 
 use Yii;
-use app\models\SupplierForm;
+use app\models\User;
 use app\models\Person;
 use app\models\Supplier;
-use app\models\UserTable;
-use app\models\Address;
+use Da\User\Traits\ContainerAwareTrait;
+use app\utils\validators\AjaxRequestModelsValidator;
 
 class SupplierController extends \yii\web\Controller
 {
+    use ContainerAwareTrait;
 
     public function actionRegister()
     {
-
-        $model = new SupplierForm();
-        $model->scenario = 'personal';
-
         $supplier = new Supplier();
-        $address = new Address();
         $person = new Person();
+        $user = new User([
+            'scenario' => 'create',
+        ]);
+
+        $this->make(AjaxRequestModelsValidator::class, [[$supplier]])->validate();
 
         $dataPost = $this->request->post();
-        if ($this->request->isPost && $supplier->load($dataPost) && $address->load($dataPost) && $person->load($dataPost)) {
+        if ($this->request->isPost && $supplier->load($dataPost) && $person->load($dataPost) && $user->load($dataPost)) {
             $transaction = \Yii::$app->db->beginTransaction();
             try {
-
-                if (!$supplier->save()) {
+                $user->username = $supplier->sup_rfc;
+                if (!$user->save()) {
                     throw new \Exception();
                 }
 
-                if (!$address->save()) {
+                $person->per_fkuser = $user->id;
+                $supplier->sup_fkuser = $user->id;
+
+                if (!$supplier->save()) {
                     throw new \Exception();
                 }
 
@@ -41,63 +45,12 @@ class SupplierController extends \yii\web\Controller
 
                 $transaction->commit();
 
-                // return $this->redirect(['address', 'id' => $user->id]);
-                echo '<pre>';
-                var_dump('Se guardo');
-                echo '</pre>';
-                die;
+                return $this->redirect(['/supplier/address/register', 'id' => $user->id]);
             } catch (\Exception $e) {
                 $transaction->rollBack();
             }
         }
 
-        return $this->render('_person', compact('supplier', 'address', 'person'));
-    }
-
-    public function actionAddress($id)
-    {
-        $model = new SupplierForm(['scenario' => 'address']);
-        $address = new Address();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user = UserTable::findOne($id);
-
-            if ($user) {
-                $address->add_fkuser = $user->id;
-                $address->add_fkcolonia = $model->colonia;
-                $address->add_street = $model->street;
-                $address->add_exterior = $model->exterior;
-                $address->add_interior = $model->interior;
-                $address->add_note = $model->note;
-
-                if ($address->save()) {
-
-                    return $this->redirect(['product', 'id' => $id]);
-                } else {
-                    // Ver si hay errores
-                    $errors = $address->getErrors();
-                    $errorMessage = 'No se pudo guardar la dirección. Errores: ' . implode(', ', array_map('implode', $errors));
-                    Yii::$app->session->setFlash('error', $errorMessage);
-                }
-            } else {
-
-                Yii::$app->session->setFlash('error', 'Usuario no encontrado.');
-            }
-        }
-
-        return $this->render('addressForm', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionList()
-    {
-        $users = UserTable::find()
-            ->with('address', 'person', 'suppliers')
-            ->all();
-
-        return $this->render('supplier-list', [
-            'users' => $users,
-        ]);
+        return $this->render('_form', compact('supplier', 'person', 'user'));
     }
 }
