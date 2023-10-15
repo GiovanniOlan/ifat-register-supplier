@@ -21,18 +21,21 @@ class SupplierController extends \yii\web\Controller
             'scenario' => 'create',
         ]);
 
-        $this->make(AjaxRequestModelsValidator::class, [[$supplier]])->validate();
+        $this->make(AjaxRequestModelsValidator::class, [[$supplier, $user]])->validate();
 
         $dataPost = $this->request->post();
         if ($this->request->isPost && $supplier->load($dataPost) && $person->load($dataPost) && $user->load($dataPost)) {
             $transaction = \Yii::$app->db->beginTransaction();
             try {
                 $user->username = $supplier->sup_rfc;
+                $user->password = $supplier->sup_rfc;
                 if (!$user->save()) {
                     throw new \Exception();
                 }
 
                 $person->per_fkuser = $user->id;
+
+                $supplier->loadDefaultValues();
                 $supplier->sup_fkuser = $user->id;
 
                 if (!$supplier->save()) {

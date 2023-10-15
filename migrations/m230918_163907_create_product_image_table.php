@@ -13,7 +13,7 @@ class m230918_163907_create_product_image_table extends Migration
     public function safeUp()
     {
         $this->createTable('product_image', [
-            'proima_id' => $this->integer()->notNull()->comment('ID'),
+            'proima_id' => $this->primaryKey()->comment('ID'),
             'proima_path' => $this->string(255)->notNull()->comment('Ruta'),
             'proima_fkproduct' => $this->integer()->notNull()->comment('Producto'),
             'proima_created_at' => $this->timestamp()->comment('Creado')->defaultValue(new \yii\db\Expression('CURRENT_TIMESTAMP')),

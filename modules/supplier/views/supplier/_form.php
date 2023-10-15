@@ -30,13 +30,22 @@ $this->title = 'Datos personales';
     <?= $form->field($person, 'per_name') ?>
     <?= $form->field($person, 'per_lastname_paternal') ?>
     <?= $form->field($person, 'per_lastname_maternal') ?>
-    <?= $form->field($person, 'per_gender')->dropDownList(GenderHelper::map(), []) ?>
-    <?= $form->field($supplier, 'sup_phone') ?>
-    <?= $form->field($user, 'email') ?>
-    <?= $form->field($supplier, 'sup_rfc', [
+    <?= $form->field($person, 'per_gender')->dropDownList(GenderHelper::map(), ['prompt' => 'Seleccione un género']) ?>
+    <?= $form->field($supplier, 'sup_phone', [
+        'inputOptions' => ['maxlength' => 10],
         'enableAjaxValidation' => true,
     ]) ?>
-    <?= $form->field($supplier, 'sup_curp') ?>
+    <?= $form->field($user, 'email', [
+        'enableAjaxValidation' => true,
+    ]) ?>
+    <?= $form->field($supplier, 'sup_rfc', [
+        'inputOptions' => ['maxlength' => true],
+        'enableAjaxValidation' => true,
+    ]) ?>
+    <?= $form->field($supplier, 'sup_curp', [
+        'inputOptions' => ['maxlength' => true],
+        'enableAjaxValidation' => true,
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

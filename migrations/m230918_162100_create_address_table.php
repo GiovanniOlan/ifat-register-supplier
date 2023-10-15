@@ -13,7 +13,7 @@ class m230918_162100_create_address_table extends Migration
     public function safeUp()
     {
         $this->createTable('address', [
-            'add_fkuser' => $this->integer()->notNull()->comment(('Usuario')),
+            'add_fkuser' => $this->primaryKey()->comment('Usuario'),
             'add_fkcolonia' => $this->integer()->notNull()->comment('Colonia'),
             'add_street' => $this->string(255)->notNull()->comment('Calle'),
             'add_exterior' => $this->string(50)->notNull()->comment('Número Exterior'),

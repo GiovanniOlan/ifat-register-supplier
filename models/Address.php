@@ -22,6 +22,11 @@ use app\models\Colonia;
 class Address extends \yii\db\ActiveRecord
 {
     /**
+     * @var string Campo de consulta para código postal
+     */
+    public $postal_code;
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -36,23 +41,25 @@ class Address extends \yii\db\ActiveRecord
     {
         return [
             ['add_fkuser', 'required'],
-            ['add_fkcolonia', 'required'],
-            ['add_street', 'required'],
-            ['add_exterior', 'required'],
-            ['add_note', 'required'],
-
             ['add_fkuser', 'integer'],
-            ['add_fkcolonia', 'integer'],
-
-            ['add_note', 'string'],
-            ['add_street', 'string', 'max' => 255],
-            ['add_exterior', 'string', 'max' => 50],
-            ['add_interior', 'string', 'max' => 50],
-
             ['add_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['add_fkuser' => 'id']],
+
+            ['add_fkcolonia', 'required'],
+            ['add_fkcolonia', 'integer'],
             ['add_fkcolonia', 'exist', 'skipOnError' => true, 'targetClass' => Colonia::class, 'targetAttribute' => ['add_fkcolonia' => 'id']],
 
+            ['add_street', 'required'],
+            ['add_street', 'string', 'max' => 255],
 
+            ['add_exterior', 'required'],
+            ['add_exterior', 'string', 'max' => 50],
+
+            ['add_interior', 'string', 'max' => 50],
+
+            ['add_note', 'required'],
+            ['add_note', 'string'],
+
+            ['postal_code', 'safe'],
 
         ];
     }
@@ -64,6 +71,7 @@ class Address extends \yii\db\ActiveRecord
     {
         return [
             'add_fkuser' => Yii::t('app', 'Usuario'),
+            'postal_code' => Yii::t('app', 'Código postal'),
             'add_fkcolonia' => Yii::t('app', 'Colonia'),
             'add_street' => Yii::t('app', 'Calle'),
             'add_exterior' => Yii::t('app', 'Número Exterior'),

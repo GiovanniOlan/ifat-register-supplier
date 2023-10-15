@@ -39,18 +39,22 @@ class Supplier extends \yii\db\ActiveRecord
             ['sup_fkuser', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['sup_fkuser' => 'id']],
 
             ['sup_phone', 'required'],
+            ['sup_phone', 'unique'],
             ['sup_phone', 'integer'],
             [
                 'sup_phone', 'match', 'pattern' => '/^[0-9]{10}$/',
                 'message' => 'El número telefónico debe contener 10 dígitos.'
             ],
 
-            ['sup_rfc', 'string', 'max' => 50],
             ['sup_rfc', 'unique'],
             ['sup_rfc', 'required'],
+            ['sup_rfc', 'string', 'min' => 11, 'max' => 13],
+            ['sup_rfc', 'match', 'pattern' => '/^[A-Za-z0-9]*$/', 'message' => 'RFC solo debe contener letras y números'],
 
             ['sup_curp', 'required'],
-            ['sup_curp', 'string', 'max' => 50],
+            ['sup_curp', 'unique'],
+            ['sup_curp', 'string', 'max' => 18],
+            ['sup_curp', 'match', 'pattern' => '/^[A-Za-z0-9]*$/', 'message' => 'CURP solo debe contener letras y números'],
 
             ['sup_status', 'integer'],
             ['sup_status', 'in', 'range' => StatusHelper::getValues()],
