@@ -13,6 +13,14 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
         '@tests' => '@app/tests',
     ],
+    'modules' => [
+        'user' => [
+            'class' => Da\User\Module::class,
+            'classMap' => [
+                'User' => \app\models\User::class,
+            ],
+        ],
+    ],
     'components' => [
         'authManager' => [
             'class' => \yii\rbac\DbManager::class,

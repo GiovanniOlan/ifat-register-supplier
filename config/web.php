@@ -17,8 +17,43 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
+        'supplier' => [
+            'class' => 'app\modules\supplier\Module',
+        ],
+        // 'supplier_register' => [
+        //     'class' => 'app\modules\supplier_register\Module',
+        // ],
         'user' => [
             'class' => Da\User\Module::class,
+            'classMap' => [
+                'User' => \app\models\User::class,
+            ],
+            'enableRegistration' => false,
+            'enableEmailConfirmation' => false, // Esto desactivará el envío de correos electrónicos
+            'generatePasswords' => false,
+            'allowPasswordRecovery' => false,
+            'allowAdminPasswordRecovery' => false,
+            'controllerMap' => [
+                // 'security' => [
+                //     'class' => \Da\User\Controller\SecurityController::class,
+                //     'layout' => '@app/views/layouts/auth',
+                //     'viewPath' => '@app/views/security', // Ruta a tus vistas personalizadas
+                // ],
+                'admin' => [
+                    'class' => \app\modules\da_custom\controllers\AdminController::class,
+                ],
+                'profile' => [
+                    'class' => \app\modules\da_custom\controllers\ProfileController::class,
+                ],
+                'recovery' => [
+                    'class' => \Da\User\Controller\RecoveryController::class,
+                    // 'layout' => '@app/views/layouts/auth',
+                ],
+                'registration' => [
+                    'class' => \Da\User\Controller\RegistrationController::class,
+                    // 'layout' => '@app/views/layouts/auth',
+                ]
+            ],
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
             // 'administrators' => ['admin'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
@@ -28,6 +63,13 @@ $config = [
     'components' => [
         'authManager' => [
             'class' => \yii\rbac\DbManager::class,
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@Da/User/resources/views' => '@app/modules/da_custom/views',
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -59,7 +101,13 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [],
+            'rules' => [
+                '' => 'supplier/supplier/search',
+                'supplier/<action:[A-Za-z0-9-]+>' => 'supplier/supplier/<action>',
+                'supplier/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/supplier/<action>',
+                'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'supplier/<controller>/<action>',
+                'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/<controller>/<action>',
+            ],
         ],
     ],
     'params' => $params,
@@ -71,7 +119,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
