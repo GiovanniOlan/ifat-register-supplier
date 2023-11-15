@@ -18,6 +18,7 @@ $this->title = 'aa';
 
         <p>
             <?= Html::a('Iniciar Registro', ['/supplier/register'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Iniciar Sistema', ['/supplier/search'], ['class' => 'btn btn-primary']) ?>
         </p>
     </div>
 </div>

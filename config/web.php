@@ -102,7 +102,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //Supplier Module
+                '' => 'supplier/supplier/search',
                 'supplier/<action:[A-Za-z0-9-]+>' => 'supplier/supplier/<action>',
                 'supplier/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/supplier/<action>',
                 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'supplier/<controller>/<action>',

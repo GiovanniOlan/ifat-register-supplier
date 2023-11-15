@@ -13,9 +13,18 @@ class SupplierController extends \yii\web\Controller
 {
     use ContainerAwareTrait;
 
-    public function actionRegister()
+    public function actionRegister($rfc)
     {
-        $supplier = new Supplier();
+        $supplierSearch = Supplier::findOne(['sup_rfc' => $rfc]);
+
+        if ($supplierSearch !== null) {
+            return $this->redirect(['address/register', 'id' => $supplierSearch->sup_fkuser]);
+        }
+
+        $supplier = new Supplier([
+            'scenario' => Supplier::SCENARIO_SUPPLIER_REGISTER,
+            'sup_rfc' => $rfc,
+        ]);
         $person = new Person();
         $user = new User([
             'scenario' => 'create',
@@ -54,6 +63,19 @@ class SupplierController extends \yii\web\Controller
             }
         }
 
-        return $this->render('_form', compact('supplier', 'person', 'user'));
+        return $this->render('_form', ['person' => $person, 'supplier' => $supplier, 'user' => $user, 'rfc' => $rfc]);
+    }
+
+    public function actionSearch()
+    {
+        $supplier = new Supplier();
+
+        if (Yii::$app->request->post('Supplier')) {
+            $rfc = Yii::$app->request->post('Supplier')['sup_rfc'];
+
+            return $this->redirect(['supplier/register', 'rfc' => $rfc]);
+        }
+
+        return $this->render('index', compact('supplier'));
     }
 }

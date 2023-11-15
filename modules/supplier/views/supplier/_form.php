@@ -22,11 +22,15 @@ $this->title = 'Datos personales';
 <h1><?= Html::encode($this->title) ?></h1>
 
 <div class="create">
+
     <?php $form = ActiveForm::begin([
         'enableClientValidation' => true,
         // 'enableAjaxValidation' => true,
     ]); ?>
 
+    <?= $form->field($supplier, 'sup_rfc')->textInput([
+        'disabled' => !$supplier->isAttributeActive('sup_rfc')
+    ]) ?>
     <?= $form->field($person, 'per_name') ?>
     <?= $form->field($person, 'per_lastname_paternal') ?>
     <?= $form->field($person, 'per_lastname_maternal') ?>
@@ -36,10 +40,6 @@ $this->title = 'Datos personales';
         'enableAjaxValidation' => true,
     ]) ?>
     <?= $form->field($user, 'email', [
-        'enableAjaxValidation' => true,
-    ]) ?>
-    <?= $form->field($supplier, 'sup_rfc', [
-        'inputOptions' => ['maxlength' => true],
         'enableAjaxValidation' => true,
     ]) ?>
     <?= $form->field($supplier, 'sup_curp', [

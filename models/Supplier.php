@@ -2,8 +2,9 @@
 
 namespace app\models;
 
-use app\utils\helpers\StatusHelper;
 use Yii;
+use yii\helpers\ArrayHelper;
+use app\utils\helpers\StatusHelper;
 
 /**
  * This is the model class for table "supplier".
@@ -20,9 +21,18 @@ use Yii;
  */
 class Supplier extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    const SCENARIO_SUPPLIER_REGISTER = 'scenario_supplier_register';
+
+    public function scenarios()
+    {
+        return ArrayHelper::merge(
+            parent::scenarios(),
+            [
+                self::SCENARIO_SUPPLIER_REGISTER => ['sup_phone', 'sup_curp'],
+            ]
+        );
+    }
+
     public static function tableName()
     {
         return 'supplier';
