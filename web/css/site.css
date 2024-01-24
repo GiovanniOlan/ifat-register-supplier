@@ -1,5 +1,5 @@
 main > .container {
-    padding: 70px 15px 20px;
+    padding: 100px 15px 20px;
 }
 
 .footer {
@@ -86,3 +86,56 @@ a.desc:after {
 .form-group {
     margin-bottom: 1rem;
 }
+.contact-box-section .right-sidebar-box .custom-form .custom-gender {
+	position: relative
+}
+
+.custom-gender .form-select {
+	padding: 3%;
+    padding-left: 3rem;
+	border: none
+}
+.contact-box-section .right-sidebar-box .custom-form .custom-gender i  {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 130%;
+	padding: 0 calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	font-size: calc(14px+ (18 - 14) * ((100vw - 320px) / (1920 - 320)));
+	color: #4a5568
+}
+.invalid-feedback{
+    margin-top: -16px ;
+    padding-left: 70%;
+}
+/* Estilos para la barra de progreso */
+    .progress-container {
+        width: 100%;
+        /* Ocupa el ancho completo */
+        background-color: #ddd;
+        /* Color de fondo gris claro */
+        padding: 10px;
+        /* Espaciado interno */
+        box-sizing: border-box;
+        /* Ajusta el modelo de caja */
+        margin-top: 20px;
+    }
+
+    .progress-title {
+        font-size: 18px;
+    }
+
+    .progress {
+        width: 100%;
+        height: 40px;
+    }
+
+    .progress-bar {
+        background-color: #2a7d9d;
+    }

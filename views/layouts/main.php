@@ -1,14 +1,11 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use yii\helpers\Html;
 
 AppAsset::register($this);
 
@@ -20,67 +17,53 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_k
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>" class="h-100">
 
-<head>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
+    <head>
+        <title><?= Html::encode($this->title) ?></title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <?php $this->head() ?>
+    </head>
 
-<body class="d-flex flex-column h-100">
+    <body>
     <?php $this->beginBody() ?>
 
-    <header id="header">
-        <?php
-        NavBar::begin([
-            'brandLabel' => Yii::$app->name,
-            'brandUrl' => Yii::$app->homeUrl,
-            'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
-        ]);
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav'],
-            'items' => [
-                ['label' => 'Home', 'url' => ['/']],
-                // ['label' => 'About', 'url' => ['/site/about']],
-                // ['label' => 'Contact', 'url' => ['/site/contact']],
-                // Yii::$app->user->isGuest
-                //     ? ['label' => 'Login', 'url' => ['/site/login']]
-                //     : '<li class="nav-item">'
-                //     . Html::beginForm(['/site/logout'])
-                //     . Html::submitButton(
-                //         'Logout (' . Yii::$app->user->identity->username . ')',
-                //         ['class' => 'nav-link btn btn-link logout']
-                //     )
-                //     . Html::endForm()
-                //     . '</li>'
-            ]
-        ]);
-        NavBar::end();
-        ?>
-    </header>
+    <!-- Loader Start -->
+    <div class="fullpage-loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Loader End -->
 
-    <main id="main" class="flex-shrink-0" role="main">
-        <div class="container">
-            <?php if (!empty($this->params['breadcrumbs'])) : ?>
-                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-            <?php endif ?>
-            <?= Alert::widget() ?>
-            <?= $content ?>
-        </div>
-    </main>
+    <?= $this->render('header') ?>
 
-    <footer id="footer" class="mt-auto py-3 bg-light">
-        <div class="container">
-            <div class="row text-muted">
-                <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-                <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-            </div>
-        </div>
-    </footer>
+    <?= $this->render('menu-start-mobile') ?>
+
+    <?= $this->render('section-home') ?>
+
+    <?= $this->render('product-section') ?>
+
+    <?= $this->render('footer') ?>
+
+    <?= $this->render('quick-view') ?>
+
+    <?= $this->render('location') ?>
+
+    <?= $this->render('cookie-bar') ?>
+
+    <?= $this->render('deal-box') ?>
+
+    <?= $this->render('tap-to-top') ?>
+
+    <?= $this->render('bg-overlay') ?>
 
     <?php $this->endBody() ?>
-</body>
+    </body>
 
-</html>
+    </html>
 <?php $this->endPage() ?>
