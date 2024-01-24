@@ -1,14 +1,11 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use yii\helpers\Html;
 
 AppAsset::register($this);
 
@@ -20,27 +17,27 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_k
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>" class="h-100">
 
-<head>
-    <title><?= Html::encode($this->title) ?></title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <?php $this->head() ?>
-</head>
+    <head>
+        <title><?= Html::encode($this->title) ?></title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <?php $this->head() ?>
+    </head>
 
-<body>
+    <body>
     <?php $this->beginBody() ?>
 
     <!-- Loader Start -->
-    <!-- <div class="fullpage-loader">
+    <div class="fullpage-loader">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
         <span></span>
         <span></span>
-    </div> -->
+    </div>
     <!-- Loader End -->
 
     <?= $this->render('header') ?>
@@ -66,7 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?= $this->render('bg-overlay') ?>
 
     <?php $this->endBody() ?>
-</body>
+    </body>
 
-</html>
+    </html>
 <?php $this->endPage() ?>

@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap5\ActiveForm;
 use app\assets\AppAsset;
+use yii\widgets\ActiveForm;
 
 AppAsset::register($this);
 
