@@ -44,10 +44,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     <?= $this->render('menu-start-mobile') ?>
 
-    <?= $this->render('section-home') ?>
-
-    <?= $this->render('product-section') ?>
-
+    <?= $content ?>
+    
     <?= $this->render('footer') ?>
 
     <?= $this->render('quick-view') ?>

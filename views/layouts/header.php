@@ -1,5 +1,6 @@
 <!-- Header Start -->
-<header class="header-compact header-absolute">
+<!-- <header class="header-compact header-absolute"> -->
+<header class="header-compact "><!-- se quito el header-absolute para que el nav no se sobreponga sobre otros elementos -->
     <div class="top-nav top-header sticky-header">
         <div class="container-fluid-lg">
             <div class="row">
