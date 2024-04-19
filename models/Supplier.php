@@ -83,7 +83,7 @@ class Supplier extends \yii\db\ActiveRecord
             'sup_fkuser' => Yii::t('app', 'Usuario'),
             'sup_phone' => Yii::t('app', 'Teléfono'),
             'sup_curp' => Yii::t('app', 'CURP'),
-            'sup_rfc' => Yii::t('app', ''),
+            'sup_rfc' => Yii::t('app', 'RFC'),
             'sup_status' => Yii::t('app', 'Estado'),
             'created_at' => Yii::t('app', 'Creado'),
             'updated_at' => Yii::t('app', 'Actualizado'),

@@ -15,10 +15,18 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@uploadPath' => '@app/web/upload',
+        '@web' => '@app/web/',
     ],
     'modules' => [
         'supplier' => [
             'class' => 'app\modules\supplier\Module',
+        ],
+        'product' => [
+            'class' => 'app\modules\product\Module',
+        ],
+        'administration' => [
+            'class' => 'app\modules\administration\Module',
         ],
         // 'supplier_register' => [
         //     'class' => 'app\modules\supplier_register\Module',
@@ -107,6 +115,14 @@ $config = [
                 'supplier/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/supplier/<action>',
                 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'supplier/<controller>/<action>',
                 'supplier/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'supplier/<controller>/<action>',
+                'product/<action:[A-Za-z0-9-]+>' => 'product/product/<action>',
+                'product/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'product/product/<action>',
+                'product/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'product/<controller>/<action>',
+                'product/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'product/<controller>/<action>',
+                'administration/<action:[A-Za-z0-9-]+>' => 'administration/administration/<action>',
+                'administration/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'administration/administration/<action>',
+                'administration/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>' => 'administration/<controller>/<action>',
+                'administration/<controller:[A-Za-z0-9-]+>/<action:[A-Za-z0-9-]+>/<id:\d+>' => 'administration/<controller>/<action>',
             ],
         ],
     ],

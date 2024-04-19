@@ -17,93 +17,76 @@ AppAsset::register($this);
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
-<?php
-
-$totalSteps = 3;
-$currentStep = 2;
-$progressPercentage = ($currentStep / $totalSteps) * 100;
-
-// Determinar el título de la barra de progreso según el paso actual
-$progressTitle = '';
-if ($currentStep == 1) {
-    $progressTitle = 'Datos Personales';
-} elseif ($currentStep == 2) {
-    $progressTitle = 'Dirección';
-} elseif ($currentStep == 3) {
-    $progressTitle = 'aaa';
-}
-?> <div class="progress-cont">
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: <?= $progressPercentage ?>%;" aria-valuenow="<?= $progressPercentage ?>" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-title"><?= $progressTitle ?></div>
-        </div>
-    </div>
-</div>
 <div class="address-create">
-
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin-right: 30px;
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+    </style>
     <section class="contact-box-section">
-        <div class="right-sidebar-box">
+        <div class="right-sidebar-box card">
 
+            <h3 style="color: #235b4e;">Direccion</h3>
 
             <?php $form = ActiveForm::begin(); ?>
 
             <div class="row">
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($address, 'postal_code')->textInput(['id' => 'postal_code', 'onchange' => 'getColonias()']) ?>
-                            <i class="fa-solid fa-map"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-gender">
                             <?= $form->field($address, 'add_fkcolonia')->dropDownList([], ['prompt' => 'Seleccione una colonia', 'id' => 'add_fkcolonia']) ?>
-                            <i class="fa-solid fa-map-pin"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($address, 'add_street')->textInput() ?>
-                            <i class="fa-solid fa-road"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($address, 'add_exterior')->textInput() ?>
-                            <i class="fa-solid fa-house"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($address, 'add_interior')->textInput() ?>
-                            <i class="fa-solid fa-house"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($address, 'add_note')->textarea(['rows' => 4]) ?>
-                            <i class="fa-solid fa-sticky-note"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class=" form-group">
-                <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Siguiente', ['class' => 'btn btn-primary', 'style' => 'background-color: #235b4e; color: white;']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

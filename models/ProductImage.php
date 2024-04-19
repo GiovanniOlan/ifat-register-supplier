@@ -17,6 +17,7 @@ use app\models\Product;
  */
 class ProductImage extends \yii\db\ActiveRecord
 {
+    public $eventImage; // Agregar esta propiedad
     /**
      * {@inheritdoc}
      */
@@ -31,6 +32,7 @@ class ProductImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['eventImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             ['proima_id', 'required'],
             ['proima_path', 'required'],
             ['proima_fkproduct', 'required'],
@@ -69,5 +71,21 @@ class ProductImage extends \yii\db\ActiveRecord
     public function getProimaFkproduct()
     {
         return $this->hasOne(Product::class, ['pro_id' => 'proima_fkproduct']);
+    }
+    public function upload()
+    {
+        if ($this->validate()) {
+            $path = $this->uploadPath() . '/' . $this->id . '.' . $this->eventImage->extension;
+            if ($this->eventImage->saveAs($path)) {
+                $this->proima_path = '/uploads/' . $this->id . '.' . $this->eventImage->extension;
+                return $this->save();
+            }
+        }
+        return false;
+    }
+
+    public function uploadPath()
+    {
+        return Yii::getAlias('@app/web/upload/images');
     }
 }

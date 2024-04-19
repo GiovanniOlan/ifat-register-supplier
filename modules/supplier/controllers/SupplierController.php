@@ -58,6 +58,7 @@ class SupplierController extends \yii\web\Controller
                 $transaction->commit();
 
                 return $this->redirect(['/supplier/address/register', 'id' => $user->id]);
+              //  return $this->redirect(['/product/product/create', 'id' => $user->id]);
             } catch (\Exception $e) {
                 $transaction->rollBack();
             }

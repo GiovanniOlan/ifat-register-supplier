@@ -46,4 +46,43 @@ class User extends BaseUser
     {
         return $this->hasMany(Supplier::class, ['sup_fkuser' => 'id']);
     }
+
+    public function getFullName()
+    {
+        $person = $this->person;
+        if ($person !== null) {
+            return $person->per_name . ' ' . $person->per_lastname_paternal . ' ' . $person->per_lastname_maternal;
+        }
+        return '';
+    }
+
+    public function getSupplierCreatedAt()
+    {
+        $supplier = $this->suppliers[0] ?? null;
+        if ($supplier !== null) {
+            return $supplier->created_at;
+        }
+        return '';
+    }
+    public function getTotalProducts()
+    {
+        return count($this->products);
+    }
+    public function getSupplierStatusText()
+    {
+        $supplier = $this->suppliers[0] ?? null;
+        if ($supplier !== null) {
+            switch ($supplier->sup_status) {
+                case 1:
+                    return 'En revisión';
+                case 2:
+                    return 'Aceptado';
+                case 3:
+                    return 'Rechazado';
+                default:
+                    return 'Desconocido';
+            }
+        }
+        return '';
+    }
 }

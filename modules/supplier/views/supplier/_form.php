@@ -20,135 +20,130 @@ AppAsset::register($this);
 
 $this->title = 'Datos personales';
 ?>
-<?php
-
-$totalSteps = 3;
-$currentStep = 1;
-$progressPercentage = ($currentStep / $totalSteps) * 100;
-
-// Determinar el título de la barra de progreso según el paso actual
-$progressTitle = '';
-if ($currentStep == 1) {
-    $progressTitle = 'Datos Personales';
-} elseif ($currentStep == 2) {
-    $progressTitle = 'Dirección';
-} elseif ($currentStep == 3) {
-    $progressTitle = 'aaa';
-}
-?>
-
-<div class="progress-cont">
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: <?= $progressPercentage ?>%;" aria-valuenow="<?= $progressPercentage ?>" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-title"><?= $progressTitle ?></div>
-        </div>
-    </div>
-</div>
 
 
 <div class="create">
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin-right: 30px;
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
 
+        .custom-gender {
+            padding: none;
+        }
+    </style>
     <section class="contact-box-section">
-        <div class="right-sidebar-box">
+        <div class="right-sidebar-box card">
 
 
             <?php $form = ActiveForm::begin([
                 'enableClientValidation' => true,
                 // 'enableAjaxValidation' => true,
             ]); ?>
+            <h3 style="color: #235b4e;">Tus datos personales</h3>
+
 
             <div class="row">
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($supplier, 'sup_rfc')->textInput([
                                 'disabled' => !$supplier->isAttributeActive('sup_rfc')
                             ]) ?>
-                            <i class="fa-solid fa-user"></i>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($person, 'per_name') ?>
-                            <i class="fa-solid fa-user"></i>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
-
                         <div class="custom-input">
                             <?= $form->field($person, 'per_lastname_paternal') ?>
-                            <i class="fa-solid fa-user"></i>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($person, 'per_lastname_maternal') ?>
-                            <i class="fa-solid fa-user"></i>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-gender">
                             <?= $form->field($person, 'per_gender')->dropDownList(GenderHelper::map(), ['prompt' => 'Seleccione un género']) ?>
-                            <i class="fa-solid fa-venus-mars"></i>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($supplier, 'sup_phone', [
-                                'inputOptions' => ['maxlength' => 10],
+                                'inputOptions' => [
+                                    'maxlength' => 10,
+                                    'style' => 'border: none; font-size: 14px; padding: calc(8px + (14 - 8) * ((100vw - 320px) / (1920 - 320))); line-height: 1.5; width: 100%; border-radius: 0.25rem;'
+                                ],
                                 'enableAjaxValidation' => true,
                             ]) ?>
-                            <i class="fa-solid fa-mobile-screen-button"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($user, 'email', [
                                 'enableAjaxValidation' => true,
                             ]) ?>
-                            <i class="fa-solid fa-envelope"></i>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xxl-6 col-lg-12 col-sm-6">
+                <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
                             <?= $form->field($supplier, 'sup_curp', [
-                                'inputOptions' => ['maxlength' => 18],
+                                'inputOptions' => [
+                                    'maxlength' => 18,
+                                    'style' => 'border: none; font-size: 14px; padding: calc(8px + (14 - 8) * ((100vw - 320px) / (1920 - 320))); line-height: 1.5; width: 100%; border-radius: 0.25rem;'
+                                ],
                                 'enableAjaxValidation' => true,
                             ]) ?>
-                            <i class="fa-solid fa-key"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Siguiente', ['class' => 'btn btn-primary', 'style' => 'background-color: #235b4e; color: white;']) ?>
             </div>
-
             <?php ActiveForm::end(); ?>
-
         </div>
     </section>
+
 
 
 

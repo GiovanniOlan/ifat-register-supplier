@@ -17,7 +17,8 @@ class AddressController extends BaseController
         $userSupplier = $this->findModel($id, null, User::class);
 
         if (!empty($userSupplier->addresses)) {
-            throw new NotFoundHttpException('Este usuario ya tiene una direccion');
+            //  throw new NotFoundHttpException('Este usuario ya tiene una direccion');
+            return $this->redirect(['/product/product/index', 'id' => $userSupplier->id]);
         }
 
         $address = new Address();
@@ -27,7 +28,8 @@ class AddressController extends BaseController
             $address->add_fkuser = $userSupplier->id;
 
             if ($address->save()) {
-                return $this->redirect(['site/index']);
+                // return $this->redirect(['site/index']);
+                return $this->redirect(['/product/product/index', 'id' => $userSupplier->id]);
             }
         }
         return $this->render('_form', compact('address'));

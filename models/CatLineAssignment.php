@@ -37,7 +37,7 @@ class CatLineAssignment extends \yii\db\ActiveRecord
             ['clias_fkproduct', 'integer'],
             ['clias_fkline', 'integer'],
             ['clias_fkproduct', 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['clias_fkproduct' => 'pro_id']],
-            ['clias_fkline', 'exist', 'skipOnError' => true, 'targetClass' => CatLine::class, 'targetAttribute' => ['clias_fkline' => 'lin_id']],
+            ['clias_fkline', 'exist', 'skipOnError' => true, 'targetClass' => CatLine::class, 'targetAttribute' => ['clias_fkline' => 'clin_id']],
 
         ];
     }
