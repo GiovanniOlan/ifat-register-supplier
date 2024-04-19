@@ -1,112 +1,47 @@
 <!-- Footer Section Start -->
 <footer class="section-t-space">
-    <div class="container-fluid-lg">
-        <div class="service-section">
-            <div class="row g-3">
-                <div class="col-12">
-                    <div class="service-contain">
-                        <div class="service-box">
-                            <div class="service-image">
-                                <img src="/template/svg/product.svg" class="blur-up lazyload" alt="">
-                            </div>
+    <div class="container-fluid-lg" style="background-color: #9D2449;">
 
-                            <div class="service-detail">
-                                <h5>Every Fresh Products</h5>
-                            </div>
-                        </div>
 
-                        <div class="service-box">
-                            <div class="service-image">
-                                <img src="/template/svg/delivery.svg" class="blur-up lazyload" alt="">
-                            </div>
-
-                            <div class="service-detail">
-                                <h5>Free Delivery For Order Over $50</h5>
-                            </div>
-                        </div>
-
-                        <div class="service-box">
-                            <div class="service-image">
-                                <img src="/template/svg/discount.svg" class="blur-up lazyload" alt="">
-                            </div>
-
-                            <div class="service-detail">
-                                <h5>Daily Mega Discounts</h5>
-                            </div>
-                        </div>
-
-                        <div class="service-box">
-                            <div class="service-image">
-                                <img src="/template/svg/market.svg" class="blur-up lazyload" alt="">
-                            </div>
-
-                            <div class="service-detail">
-                                <h5>Best Price On The Market</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="main-footer section-b-space section-t-space">
+        <div class=" main-footer section-b-space section-t-space">
             <div class="row g-md-4 g-3">
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="footer-logo">
                         <div class="theme-logo">
                             <a href="index.html">
-                                <img src="/template/images/logo/1.png" class="blur-up lazyload" alt="">
+                                <img src="/template/images/logo/7.png" class="blur-up lazyload" alt="">
                             </a>
                         </div>
 
-                        <div class="footer-logo-contain">
-                            <p>We are a friendly bar serving a variety of cocktails, wines and beers. Our bar is a
-                                perfect place for a couple.</p>
 
-                            <ul class="address">
-                                <li>
-                                    <i data-feather="home"></i>
-                                    <a href="javascript:void(0)">1418 Riverwood Drive, CA 96052, US</a>
-                                </li>
-                                <li>
-                                    <i data-feather="mail"></i>
-                                    <a href="javascript:void(0)">support@fastkart.com</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
 
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                     <div class="footer-title">
-                        <h4>Categories</h4>
+                        <h4 style="color: white;">TRANSPARENCIA</h4>
                     </div>
 
                     <div class="footer-contain">
                         <ul>
                             <li>
-                                <a href="shop-left-sidebar.html" class="text-content">Vegetables & Fruit</a>
+                                <a href="https://transparencia.tabasco.gob.mx/" class="text-content" style="color: white;">Portal transparencia</a>
                             </li>
                             <li>
-                                <a href="shop-left-sidebar.html" class="text-content">Beverages</a>
+                                <a href="https://itaip.org.mx/" class="text-content" style="color: white;">ITAIP</a>
                             </li>
                             <li>
-                                <a href="shop-left-sidebar.html" class="text-content">Meats & Seafood</a>
+                                <a href="https://consultapublicamx.plataformadetransparencia.org.mx/vut-web/?idEntidadParametro=27&idSectorParametro=0&idSujetoObigadoParametro=0" class="text-content" style="color: white;">Plataforma nacional de transparencia</a>
                             </li>
                             <li>
-                                <a href="shop-left-sidebar.html" class="text-content">Frozen Foods</a>
+                                <a href="https://tabasco.gob.mx/accesibilidad" class="text-content" style="color: white;">Accesibilidad</a>
                             </li>
-                            <li>
-                                <a href="shop-left-sidebar.html" class="text-content">Biscuits & Snacks</a>
-                            </li>
-                            <li>
-                                <a href="shop-left-sidebar.html" class="text-content">Grocery & Staples</a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-xl col-lg-2 col-sm-3">
+                <!-- <div class="col-xl col-lg-2 col-sm-3">
                     <div class="footer-title">
                         <h4>Useful Links</h4>
                     </div>
@@ -130,22 +65,22 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-xl-2 col-sm-3">
                     <div class="footer-title">
-                        <h4>Help Center</h4>
+                        <h4 style="color: white;">Centro de ayuda</h4>
                     </div>
 
                     <div class="footer-contain">
                         <ul>
                             <li>
-                                <a href="order-success.html" class="text-content">Your Order</a>
+                                <a href="order-success.html" class="text-content" style="color: white;">Consulta tu CURP </a>
                             </li>
                             <li>
-                                <a href="user-dashboard.html" class="text-content">Your Account</a>
+                                <a href="user-dashboard.html" class="text-content" style="color: white;">Consulta tu Acta de Nacimiento</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="order-tracking.html" class="text-content">Track Order</a>
                             </li>
                             <li>
@@ -156,14 +91,14 @@
                             </li>
                             <li>
                                 <a href="faq.html" class="text-content">FAQ</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="footer-title">
-                        <h4>Contact Us</h4>
+                        <h4 style="color: white;">Contactenos</h4>
                     </div>
 
                     <div class="footer-contact">
@@ -172,8 +107,8 @@
                                 <div class="footer-number">
                                     <i data-feather="phone"></i>
                                     <div class="contact-number">
-                                        <h6 class="text-content">Hotline 24/7 :</h6>
-                                        <h5>+91 888 104 2340</h5>
+                                        <h6 class="text-content" style="color: white;">Telefono :</h6>
+                                        <h5 style="color: white;">9933 14 21 76</h5>
                                     </div>
                                 </div>
                             </li>
@@ -182,27 +117,13 @@
                                 <div class="footer-number">
                                     <i data-feather="mail"></i>
                                     <div class="contact-number">
-                                        <h6 class="text-content">Email Address :</h6>
-                                        <h5>fastkart@hotmail.com</h5>
+                                        <h6 class="text-content" style="color: white;">Correo Electronico :</h6>
+                                        <h5 style="color: white;">ifatcomercializacion@gmail.com</h5>
                                     </div>
                                 </div>
                             </li>
 
-                            <li class="social-app mb-0">
-                                <h5 class="mb-2 text-content">Download App :</h5>
-                                <ul>
-                                    <li class="mb-0">
-                                        <a href="https://play.google.com/store/apps" target="_blank">
-                                            <img src="/template/images/playstore.svg" class="blur-up lazyload" alt="">
-                                        </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a href="https://www.apple.com/in/app-store/" target="_blank">
-                                            <img src="/template/images/appstore.svg" class="blur-up lazyload" alt="">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -211,12 +132,10 @@
 
         <div class="sub-footer section-small-space">
             <div class="reserve">
-                <h6 class="text-content">©2022 Fastkart All rights reserved</h6>
+                <h6 class="text-content">©IFAT All rights reserved</h6>
             </div>
 
-            <div class="payment">
-                <img src="/template/images/payment/1.png" class="blur-up lazyload" alt="">
-            </div>
+
 
             <div class="social-link">
                 <h6 class="text-content">Stay connected :</h6>

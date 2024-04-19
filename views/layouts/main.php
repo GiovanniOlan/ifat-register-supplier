@@ -17,16 +17,16 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_k
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
-    <!DOCTYPE html>
-    <html lang="<?= Yii::$app->language ?>" class="h-100">
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>" class="h-100">
 
-    <head>
-        <title><?= Html::encode($this->title) ?></title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <?php $this->head() ?>
-    </head>
+<head>
+    <title><?= Html::encode($this->title) ?></title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <?php $this->head() ?>
+</head>
 
-    <body>
+<body>
     <?php $this->beginBody() ?>
 
     <!-- Loader Start -->
@@ -45,14 +45,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?= $this->render('menu-start-mobile') ?>
 
     <?= $content ?>
-    
+
+    <?= $this->render('footer1') ?>
     <?= $this->render('footer') ?>
 
     <?= $this->render('quick-view') ?>
 
     <?= $this->render('location') ?>
 
-    <?= $this->render('cookie-bar') ?>
 
     <?= $this->render('deal-box') ?>
 
@@ -61,7 +61,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?= $this->render('bg-overlay') ?>
 
     <?php $this->endBody() ?>
-    </body>
+</body>
 
-    </html>
+</html>
 <?php $this->endPage() ?>
