@@ -421,30 +421,28 @@ use yii\helpers\ArrayHelper;
         <div class="image-product-container">
             <?php
             $catLineAssignments = $product->catLineAssignments;
-            // Obtener la primera imagen del producto
             $productImages = $product->productImages;
             $firstProductImage = !empty($productImages) ? $productImages[0] : null;
 
-            // Obtener la ruta de la imagen
-            $imagePath = $firstProductImage->proima_path;
+            if ($firstProductImage) {
+                $imagePath = $firstProductImage->proima_path;
 
-            // Ajustar la ruta eliminando '@web'
-            $adjustedPath = str_replace('@web', '', $imagePath);
+                $adjustedPath = str_replace('@web', '', $imagePath);
 
-            // Convertir la ruta relativa a una ruta absoluta
-            $absolutePath = Yii::getAlias('@app/web') . $adjustedPath;
+                $absolutePath = Yii::getAlias('@app/web') . $adjustedPath;
 
-            // Obtener el tipo de imagen
-            $imgType = pathinfo($absolutePath, PATHINFO_EXTENSION);
+                $imgType = pathinfo($absolutePath, PATHINFO_EXTENSION);
 
-            // Leer el contenido del archivo y codificarlo en base64
-            $imgData = file_get_contents($absolutePath);
-            $base64Img = 'data:image/' . $imgType . ';base64,' . base64_encode($imgData);
+                $imgData = file_get_contents($absolutePath);
+                $base64Img = 'data:image/' . $imgType . ';base64,' . base64_encode($imgData);
 
-            // Mostrar la imagen con la estructura deseada
             ?>
-            <img src="<?= $base64Img ?>" class="product-image" alt="Product Image">
+                <img src="<?= $base64Img ?>" class="product-image" alt="Product Image">
+            <?php } else { ?>
+                <p class="no-image">No se encontró ninguna imagen para este producto.</p>
+            <?php } ?>
         </div>
+
         <div class="product-info">
             <p><strong>Producto a Evaluar:</strong> <?= $product->pro_name ?></p>
             <p><strong>Descripción:</strong> <?= $product->pro_description ?></p>
@@ -1019,6 +1017,6 @@ use yii\helpers\ArrayHelper;
                 </tr>
             </tbody>
         </table>
-
     </div>
+
 </div>

@@ -41,9 +41,6 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <?= $this->render('page-heading') ?>
-
-
                     <?= $content ?>
 
                 </div>
@@ -91,6 +88,38 @@
     <!-- Page level custom scripts -->
     <script src="/dashboard_template/js/demo/chart-area-demo.js"></script>
     <script src="/dashboard_template/js/demo/chart-pie-demo.js"></script>
+    <script>
+        // Mostrar el formulario de rechazo
+        $('#rejectBtn').click(function(event) {
+            event.stopPropagation();
+            $('#rejectFormContainer').show();
+            $('#acceptFormContainer').hide();
+            $('#cancelBtn').show();
+        });
+
+        // Mostrar el formulario de aceptación 
+        $('#acceptBtn').click(function(event) {
+            event.stopPropagation();
+            $('#acceptFormContainer').show();
+            $('#rejectFormContainer').hide();
+            $('#cancelBtn').show();
+        });
+
+        // Ocultar los formularios 
+        $('#cancelBtn').click(function(event) {
+            event.stopPropagation();
+            $('#acceptFormContainer, #rejectFormContainer').hide();
+            $('#cancelBtn').hide();
+        });
+
+        // Prevenir que los clics dentro de los formularios oculten los forms
+        $('#rejectFormContainer, #acceptFormContainer').click(function(event) {
+            event.stopPropagation();
+        });
+
+        // Ocultar el botón "Cancelar" 
+        $('#cancelBtn').hide();
+    </script>
 </body>
 
 </html>

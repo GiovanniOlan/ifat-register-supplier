@@ -282,10 +282,9 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-xs-5">
-                                <h2>Candidatos Registrados</h2>
+                                <h2>Candidatos Rechazados</h2>
                             </div>
                             <div class="col-xs-7">
-
                                 <!-- <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Exportar usuarios</span></a> -->
                             </div>
                         </div>
@@ -310,16 +309,6 @@
                                     <td style="text-align: center;"><?= $user->getTotalProducts() ?></td>
                                     <td><?= $user->getSupplierStatusText() ?></td>
                                     <td>
-                                        <!-- <div class="dropdown">
-                                            <a class="settings dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings" data-toggle="tooltip">
-                                                <i class="fas fa-sliders-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item accept" href="#" data-status="2">Aceptar</a>
-                                                <a class="dropdown-item reject" href="#" data-status="3">Rechazar</a>
-                                            </div>
-                                        </div> -->
-
                                         <a href="<?= Yii::$app->UrlManager->createUrl(['administration/details', 'id' => $user->id]) ?>" title="Ver la información del usuario" data-toggle="tooltip">
                                             <i class="fas fa-eye" style="display: inline-block;"></i>
                                         </a>
@@ -351,42 +340,4 @@
     </div>
 
 </div>
-<?php
-$this->registerJs('
-    $(document).ready(function() {
-        $(".accept, .reject").on("click", function(e) {
-            e.preventDefault();
-            var status = $(this).data("status");
-            var confirmationMessage = "¿Estás seguro de que deseas aplicar esta modificación?";
-            if (confirm(confirmationMessage)) {
-                var userId = $(this).closest("tr").find(".user-id").text(); // Obtener el ID de usuario
-                updateUserStatus(userId, status);
-            }
-        });
-
-        function updateUserStatus(userId, status) {
-            $.ajax({
-                url: "url_para_actualizar_estado_del_proveedor",
-                type: "POST",
-                data: {
-                    userId: userId,
-                    status: status
-                },
-                success: function(response) {
-                    // Manejar la respuesta del servidor
-                    if (response.success) {
-                        // Actualización exitosa, recargar la página o actualizar la fila afectada
-                        window.location.reload(); // Recargar la página
-                    } else {
-                        alert("Hubo un error al actualizar el estado del proveedor.");
-                    }
-                },
-                error: function() {
-                    alert("Error de conexión con el servidor. Por favor, inténtelo de nuevo más tarde.");
-                }
-            });
-        }
-    });
-');
-?>
 <!-- </body> -->

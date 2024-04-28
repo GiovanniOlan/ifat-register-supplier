@@ -16,7 +16,7 @@ use yii\bootstrap5\ActiveForm;
         margin-bottom: 15px;
     }
 </style>
-
+<div style="margin-top: 20px;"></div>
 <div class="right-sidebar-box card">
     <h3 style="color: #235b4e;">A continuación agrega todos tus productos</h3>
 
@@ -27,9 +27,15 @@ use yii\bootstrap5\ActiveForm;
                     <div class="card-body">
                         <?php
                         // Ruta de la imagen
-                        $imageUrl = '@web/upload/images/gaaldi23.jpg';
+                        $productImages = $product->productImages;
+                        $firstProductImage = !empty($productImages) ? $productImages[0] : null;
                         ?>
-                        <?= Html::img($imageUrl, ['class' => 'card-img-top', 'alt' => 'Product Image']) ?>
+                        <?php if ($firstProductImage) : ?>
+                            <?= Html::img($firstProductImage->proima_path, ['class' => 'card-img-top', 'alt' => 'Product Image']) ?>
+
+                        <?php else : ?>
+                            <p class='no-image'>No se encontró ninguna imagen para este producto.</p>
+                        <?php endif; ?>
                         <h3 class="card-title">Nombre: <?= Html::encode($product->pro_name) ?></h3>
                         <h3 class="card-title">Descripción: <?= Html::encode($product->pro_description) ?></h3>
                         <!-- <h3 class="card-title">Tipo de producto: <?= isset($craftTypes[$product->pro_is_craft]) ? $craftTypes[$product->pro_is_craft] : 'Desconocido' ?></h3> -->

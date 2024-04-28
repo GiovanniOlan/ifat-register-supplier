@@ -47,137 +47,53 @@ $this->title = 'Producto';
     .unselected {
         background-color: #f2f2f2;
     }
+
+    .questionnaire-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .questionnaire-table th,
+    .questionnaire-table td {
+        padding: 6px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .questionnaire-table th {
+        background-color: #235b4e;
+        color: white;
+    }
+
+    .questionnaire-table td {
+        background-color: #f2f2f2;
+    }
+
+    .questionnaire-table td.highlight {
+        background-color: #4CAF50;
+    }
+
+    .questionnaire-table input[type="radio"]:checked+label {
+        color: white;
+        font-weight: bold;
+    }
+
+    .questionnaire-table td.selected {
+        background-color: #7b9371;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
 </style>
 <section class="contact-box-section">
 
 
     <div class="right-sidebar-box card">
 
-        <style>
-            .questionnaire-table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            .questionnaire-table th,
-            .questionnaire-table td {
-                padding: 6px;
-                border: 1px solid #ddd;
-                text-align: left;
-            }
-
-            .questionnaire-table th {
-                background-color: #235b4e;
-                color: white;
-            }
-
-            .questionnaire-table td {
-                background-color: #f2f2f2;
-            }
-
-            .questionnaire-table td.highlight {
-                background-color: #4CAF50;
-            }
-
-            .questionnaire-table input[type="radio"]:checked+label {
-                color: green;
-                font-weight: bold;
-            }
-
-            .image-file {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                row-gap: 20px;
-                margin-bottom: 20px;
-                position: relative;
-                /* Establece la posición relativa */
-                z-index: 1;
-                /* Asegúrate de que el z-index sea menor que el del navbar */
-            }
-
-            .image-file__action {
-                width: 100%;
-            }
-
-            .image-file__action label {
-                display: block;
-            }
-
-            .image-file__action label.title {
-                width: 100%;
-                margin-bottom: 15px;
-                text-align: center;
-            }
-
-            .image-file__action input {
-                width: 0;
-                height: 0;
-                opacity: 0;
-                display: none;
-            }
-
-            .image-file__result {
-                cursor: pointer;
-                overflow: hidden;
-                position: relative;
-                width: 90%;
-                height: 150px;
-                background-color: #f2f0f0;
-                border-radius: 8px;
-                border: 1px dashed #609dd6;
-                transition: bacgroundColor 0.3s linear;
-                z-index: 10;
-            }
-
-            .image-file__result::after {
-                content: 'Clic para elegir imagen.';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                color: #609dd6;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .image-file__result img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                z-index: 50;
-            }
-
-
-            .questionnaire-table td.selected {
-                background-color: greenyellow;
-            }
-
-            input[type="radio"] {
-                display: none;
-            }
-
-            input[type="radio"]:checked+label {
-                color: blue;
-            }
-
-            /* Estilos adicionales */
-            .selected {
-                background-color: greenyellow;
-            }
-
-            .unselected {
-                background-color: #f2f2f2;
-            }
-        </style>
-
         <h3 style="color: #235b4e;">Rellena los datos correspondientes a tu producto</h3>
-        <?= Html::beginForm() ?>
+        <div style="margin-top: 20px;"></div>
+        <?= Html::beginForm('', 'post', ['enctype' => 'multipart/form-data']) ?>
 
         <?= Html::csrfMetaTags() ?>
         <div class="row">
@@ -185,53 +101,38 @@ $this->title = 'Producto';
                 <div class="mb-md-4 mb-3 custom-form">
                     <div class="custom-input">
                         <label for="pro_name">Nombre del producto:</label>
-                        <input type="text" id="pro_name" name="Product[pro_name]">
+                        <input type="text" id="pro_name" name="Product[pro_name]" style="display: inline-block; width: 60%; border:none;">
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-xxl-4 col-lg-6 col-sm-12">
                 <div class="mb-md-8 mb-3 custom-form">
                     <div class="custom-input">
                         <label for="pro_description">Descripción del producto:</label>
-                        <textarea id="pro_description" name="Product[pro_description]"></textarea>
+                        <textarea id="pro_description" name="Product[pro_description]" style="display: inline-block; width: 60%; border:none;"></textarea>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+
+        </div>
         <div class="row">
             <div class="col-xxl-4 col-lg-6 col-sm-12">
                 <div class="mb-md-8 mb-3 custom-form">
-                    <div class="custom-input">
-                        <!-- <div class="image-file">
-                            <div class="image-file__action">
-                                <label for="image">Foto:</label>
-
-                                <input type="file" name="ProductImage[proima_path]" id="image" />
-                            </div>
-                            <div class="image-file__result" id="result-image">
-                                <img id="img-result" alt="" />
-                            </div>
-                        </div> -->
+                    <div class="custom-input" style="display: block; align-items: stretch;">
                         <?php
-
                         echo FileInput::widget([
-                            'name' => 'productImages[]',
-                            'options' => ['multiple' => true],
+                            'name' => 'ProductImage[eventImage]',
+                            'language' => 'es',
                             'pluginOptions' => [
-                                'previewFileType' => 'image',
-                                'uploadUrl' => Yii::$app->urlManager->createUrl(['/product/upload-image']),
-                                'uploadExtraData' => [
-                                    'product_id' => $product->pro_id,
-                                ],
-                            ],
-
+                                'showPreview' => true,
+                                'showCaption' => false,
+                                'elCaptionText' => '#customCaption'
+                            ]
                         ]);
-
                         ?>
-
                     </div>
                 </div>
             </div>
@@ -240,8 +141,8 @@ $this->title = 'Producto';
             <div class="col-xxl-4 col-lg-6 col-sm-12">
                 <div class="mb-md-4 mb-3 custom-form">
                     <div class="custom-input">
-                        <label for="productLine">Seleccionar línea de producto:</label>
-                        <select name="CatLineAssignment[clias_fkline]" id="productLine" class="form-control">
+                        <label for="productLine" class="form-label">Seleccionar línea de producto:</label>
+                        <select name="CatLineAssignment[clias_fkline]" id="productLine" class="form-select" style="border: none;">
                             <?php foreach ($lineOptions as $key => $value) : ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php endforeach; ?>
@@ -250,6 +151,7 @@ $this->title = 'Producto';
                 </div>
             </div>
         </div>
+
         <table class="questionnaire-table">
             <thead>
                 <tr>
@@ -479,7 +381,8 @@ $this->title = 'Producto';
                 </tr>
             </tbody>
         </table>
-        <?= Html::submitButton('Guardar Producto', ['class' => 'btn btn-success']) ?>
+        <div style="margin-top:10px"></div>
+        <?= Html::submitButton('Guardar Producto', ['class' => 'btn btn-success mr-2', 'style' => 'background-color: #235b4e; color: white;']) ?>
         <!-- </form> -->
         <?= Html::endForm() ?>
 
@@ -487,66 +390,33 @@ $this->title = 'Producto';
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Obtener todas las celdas de la tabla
                 var cells = document.querySelectorAll('.questionnaire-table td');
-
-                // Para cada celda
                 cells.forEach(function(cell) {
-                    // Agregar un evento de clic
                     cell.addEventListener('click', function() {
-                        // Obtener el radio button dentro de la celda
                         var radioButton = this.querySelector('input[type="radio"]');
                         if (radioButton) {
-                            // Simular clic en el radio button
                             radioButton.click();
                         }
                     });
                 });
 
-                // Obtener todos los radio buttons
                 var radioButtons = document.querySelectorAll('input[type="radio"]');
 
-                // Para cada radio button
+
                 radioButtons.forEach(function(radioButton) {
-                    // Agregar un evento de cambio
+
                     radioButton.addEventListener('change', function() {
-                        // Obtener la celda del radio button seleccionado
+
                         var cell = this.closest('td');
-                        // Restablecer todas las celdas de esta pregunta a no seleccionadas
+
                         cell.parentElement.querySelectorAll('td').forEach(function(td) {
                             td.classList.remove('selected');
                         });
-                        // Marcar la celda del radio button seleccionado como seleccionada
+
                         cell.classList.add('selected');
                     });
                 });
             });
-
-
-
-            // let selectedCell = null;
-
-            // const radioButtons = document.querySelectorAll('input[type="radio"]');
-            // radioButtons.forEach(button => {
-            //     button.addEventListener('change', function() {
-            //         // Remover selección previa
-            //         if (selectedCell) {
-            //             selectedCell.classList.remove('selected');
-            //         }
-            //         // Colorear la celda seleccionada
-            //         selectedCell = this.parentElement;
-            //         selectedCell.classList.add('selected');
-            //     });
-            // });
-
-            // function highlightCell(input) {
-            //     var cell = input.parentNode;
-            //     if (input.checked) {
-            //         cell.classList.add('highlight');
-            //     } else {
-            //         cell.classList.remove('highlight');
-            //     }
-            // }
         </script>
 
 

@@ -42,9 +42,9 @@ class Message extends \yii\db\ActiveRecord
     {
         return [
             'mess_id' => 'Mess ID',
-            'mess_reason' => 'Mess Reason',
-            'mess_meeting_day' => 'Mess Meeting Day',
-            'mess_meeting_time' => 'Mess Meeting Time',
+            'mess_reason' => 'Motivo del Rechazo',
+            'mess_meeting_day' => 'Dia de la cita',
+            'mess_meeting_time' => 'Hora',
         ];
     }
 

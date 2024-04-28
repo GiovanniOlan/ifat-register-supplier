@@ -209,9 +209,10 @@ use yii\widgets\ActiveForm;
 
     .questionnaire-table th,
     .questionnaire-table td {
-        padding: 8px;
+        padding: 1px;
         border: 1px solid #ddd;
-        text-align: left;
+        text-align: center;
+        font-size: xx-small;
     }
 
     .questionnaire-table th {
@@ -466,684 +467,679 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 <div class="row">
-
-
-
     <div class="col-lg-12">
-
-
         <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="title"><?= $person->per_name ?> <?= $person->per_lastname_paternal ?> <?= $person->per_lastname_maternal ?></h1>
-                    <?php if ($supplier = $user->suppliers[0] ?? null) : ?>
-                        <?php if ($supplier->sup_finished == 1) : ?>
-                            <div class="alert alert-warning" role="alert">
-                                Este candidato no ha finalizado su registro.
-                            </div>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                    <h2>
-                        Datos personales
-                    </h2>
-                    <p><span class="rounded-border"><strong>Género:</strong> <?= ($person->per_gender == 1) ? 'Masculino' : 'Femenino' ?></span> &nbsp;&nbsp;&nbsp;
-                        <span class="rounded-border"><strong>Teléfono:</strong> <?= $supplier->sup_phone ?></span> &nbsp;&nbsp;&nbsp; <span class="rounded-border"><strong>CURP:</strong> <?= $supplier->sup_curp ?></span> &nbsp;&nbsp;&nbsp; <span class="rounded-border"><strong>RFC:</strong> <?= $supplier->sup_rfc ?></span>
-                    </p>
-                    <h2> Dirección </h2>
-                    <?php if (!empty($user->addresses)) : ?>
-                        <?php $address = $user->addresses[0]; ?>
-                        <?php if ($colonia = $address->addFkcolonia) : ?>
-                            <p><span class="rounded-border"><strong>Colonia:</strong> <?= $colonia->nombre ?></span> &nbsp;&nbsp;&nbsp;
-                                <span class="rounded-border"><strong>Código Postal:</strong> <?= $colonia->codigo_postal ?></span> &nbsp;&nbsp;&nbsp;
-                                <span class="rounded-border"><strong>Calle:</strong> <?= $address->add_street ?></span>
-                            </p>
-                        <?php endif; ?>
-                        <p><span class="rounded-border"><strong>Número Exterior:</strong> <?= $address->add_exterior ?></span> &nbsp;&nbsp;&nbsp;
-                            <span class="rounded-border"><strong>Número Interior:</strong> <?= $address->add_interior ?></span> &nbsp;&nbsp;&nbsp;
-                            <span class="rounded-border"><strong>Nota:</strong> <?= $address->add_note ?></span>
-                        </p>
-
-
-                    <?php else : ?>
-                        <p>No ha registrado una dirección</p>
-                    <?php endif; ?>
-                    <p><strong>Estado:</strong> <?= ($supplier->sup_status == 1) ? 'En revisión' : (($supplier->sup_status == 2) ? 'Aceptado' : (($supplier->sup_status == 3) ? 'Rechazado' : 'Desconocido')) ?></p>
-
-                    <?php if ($supplier->sup_status == 1) : ?>
-                        <button class="btn btn-danger" id="rejectBtn">Rechazar</button>
-                        <button class="btn btn-success" id="acceptBtn">Aceptar</button>
-                    <?php endif; ?>
-
-                    <div id="rejectFormContainer" style="display: none;">
-                        <?php $form = ActiveForm::begin(['action' => ['administration/save-supplier', 'id' => $user->id], 'id' => 'rejectForm']); ?>
-                        <?= $form->field($messageModel, 'mess_reason')->textarea(['rows' => 4]) ?>
-                        <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
-                        <?php ActiveForm::end(); ?>
+            <h1 class="title"><?= $person->per_name ?> <?= $person->per_lastname_paternal ?> <?= $person->per_lastname_maternal ?></h1>
+            <?php if ($supplier = $user->suppliers[0] ?? null) : ?>
+                <?php if ($supplier->sup_finished == 1) : ?>
+                    <div class="alert alert-warning" role="alert">
+                        Este candidato no ha finalizado su registro.
                     </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <p><span class="rounded-border"><strong>Género:</strong> <?= ($person->per_gender == 1) ? 'Masculino' : 'Femenino' ?></span> &nbsp;&nbsp;&nbsp;
+                <span class="rounded-border"><strong>Teléfono:</strong> <?= $supplier->sup_phone ?></span> &nbsp;&nbsp;&nbsp; <span class="rounded-border"><strong>CURP:</strong> <?= $supplier->sup_curp ?></span> &nbsp;&nbsp;&nbsp; <span class="rounded-border"><strong>RFC:</strong> <?= $supplier->sup_rfc ?></span>
+            </p>
+            <h2> Dirección </h2>
+            <?php if (!empty($user->addresses)) : ?>
+                <?php $address = $user->addresses[0]; ?>
+                <?php if ($colonia = $address->addFkcolonia) : ?>
+                    <p>
+                        <span class="rounded-border"><strong>Calle:</strong> <?= $address->add_street ?></span>
+                        <span class="rounded-border"><strong>Número Exterior:</strong> <?= $address->add_exterior ?></span> &nbsp;&nbsp;&nbsp;
+                        <span class="rounded-border"><strong>Número Interior:</strong> <?= $address->add_interior ?></span> &nbsp;&nbsp;&nbsp;
+                    </p>
+                    <p><span class="rounded-border"><strong>Colonia:</strong> <?= $colonia->nombre ?></span> &nbsp;&nbsp;&nbsp;
+                        <span class="rounded-border"><strong>Código Postal:</strong> <?= $colonia->codigo_postal ?></span> &nbsp;&nbsp;&nbsp;
+                        <span class="rounded-border"><strong>Nota:</strong> <?= $address->add_note ?></span>
+                    </p>
+                <?php endif; ?>
 
+            <?php else : ?>
+                <p>No ha registrado una dirección</p>
+            <?php endif; ?>
+            <p><strong>Estado:</strong> <?= ($supplier->sup_status == 1) ? 'En revisión' : (($supplier->sup_status == 2) ? 'Aceptado' : (($supplier->sup_status == 3) ? 'Rechazado' : 'Desconocido')) ?></p>
 
+            <?php if ($supplier->sup_status == 1) : ?>
+                <button class="btn btn-danger" id="rejectBtn">Rechazar</button>
+                <button class="btn btn-success" id="acceptBtn">Aceptar</button>
+                <button class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+            <?php endif; ?>
 
+            <div id="rejectFormContainer" style="display: none;">
+                <div style="margin-top: 10px;"></div>
 
-
+                <?php $form = ActiveForm::begin(['action' => ['administration/reject-supplier', 'id' => $user->id], 'id' => 'rejectForm']); ?>
+                <?= $form->field($messageModel, 'mess_reason')->textarea(['rows' => 4]) ?>
+                <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
+                <?php ActiveForm::end(); ?>
+            </div>
+            <div id="acceptFormContainer" style="display: none;">
+                <?php $form = ActiveForm::begin(['action' => ['administration/accept-supplier', 'id' => $user->id], 'id' => 'acceptForm']); ?>
+                <div style="margin-top: 10px;"></div>
+                <div class="form-inline">
+                    <?= $form->field($messageModel, 'mess_meeting_day', ['options' => ['class' => 'mr-3']])->textInput(['type' => 'date', 'class' => 'form-control']) ?>
+                    <?= $form->field($messageModel, 'mess_meeting_time', ['options' => ['class' => 'mr-3']])->textInput(['type' => 'time', 'class' => 'form-control']) ?>
                 </div>
+                <div style="margin-top: 10px;"></div>
+                <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
 
-
         <h2 style="text-align:center; ">Productos Registrados</h2>
+
+
+
         <?php foreach ($products as $product) : ?>
-            <div>
-                <div class="product-container">
-                    <div class="image-container">
-                        <?php
-                        // Obtener la primera imagen del producto
-                        $productImages = $product->productImages;
-                        $firstProductImage = !empty($productImages) ? $productImages[0] : null;
-
-                        // Obtener las asignaciones de líneas de categoría para el producto
-                        $catLineAssignments = $product->catLineAssignments;
-                        ?>
-                        <?php if ($firstProductImage) : ?>
-                            <?= Html::img($firstProductImage->proima_path, ['class' => 'product-image', 'alt' => 'Product Image']) ?>
-                        <?php else : ?>
-                            <p class='no-image'>No se encontró ninguna imagen para este producto.</p>
-                        <?php endif; ?>
-                    </div>
-                    <div class="info-container">
-                        <p><strong>Producto a Evaluar:</strong> <?= $product->pro_name ?></p>
-                        <p><strong>Descripción:</strong> <?= $product->pro_description ?></p>
-                        <?php if (!empty($catLineAssignments)) : ?>
-                            <?php foreach ($catLineAssignments as $catLineAssignment) : ?>
-                                <p><strong>Línea de Categoría:</strong> <?= $catLineAssignment->cliasFkline->clin_name ?></p>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <p>No se han asignado líneas de categoría a este producto.</p>
-                        <?php endif; ?>
-                    </div>
-                    <div class="logo-container">
-                        <?= Html::img('@web/upload/images/logo_ifat.jpg', ['class' => 'logo-image', 'alt' => 'Logo']) ?>
-                    </div>
-                </div>
-
-                <!-- Aquí va la tabla del cuestionario -->
-                <!-- Botón para expandir el colapsable -->
-                <div class="button-container">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?= $product->pro_id ?>" aria-expanded="false" aria-controls="collapse<?= $product->pro_id ?>">
-                        Ver cuestionario
-                    </button>
-                    <div class="btn btn-primary">
-                        <?= Html::a('Descargar PDF', ['download-pdf', 'id' => $product->pro_id], ['class' => 'btn btn-primary']) ?>
-                    </div>
-                </div>
-
-
-                <!-- Colapsable para el cuestionario -->
-                <div class="collapse" id="collapse<?= $product->pro_id ?>">
-                    <!-- Primera tabla del cuestionario -->
-                    <table class="questionnaire-table" style="table-layout: fixed;">
-
-                        <thead>
-                            <tr>
-                                <th rowspan="2">Caracteristicas del producto</th>
-                                <th colspan="4" style="text-align: center;">PUNTUACIÓN</th>
-                                <th rowspan="2">VALOR (A)</th>
-                                <th rowspan="2">PRIORIZACIÓN (B)</th>
-                                <th rowspan="2">TOTAL (A*B)</th>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #235b4e;  color: white;">4</td>
-                                <td style="background-color: #235b4e; color: white;">3</td>
-                                <td style="background-color: #235b4e; color: white;">2</td>
-                                <td style="background-color: #235b4e; color: white;">1</td>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <td style="background-color: #dbece3; color: black;">Origen de la Materia Prima (Principal o inicial)</td>
-                            <?php $options = ['Natural', 'Natural (Procesado industrialmente)', 'Artificial', '            ']; ?>
-                            <?php foreach ($options as $index => $option) : ?>
-                                <?php $answer = 'answer1_' . chr(97 + $index); ?>
-                                <td style="<?= ($product->matrizDam->mdam_question1 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                    <?= $option ?>
-                                </td>
-                            <?php endforeach; ?>
-                            <td style="background-color: #dbece3;">
-                                <p>
+            <div style="margin-top: 20px;"></div>
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <div class="product-container">
+                                <div class="image-container">
                                     <?php
-                                    $answer = $product->matrizDam->mdam_question1; // Respuesta seleccionada
-                                    $points = 0; // Valor inicial de los puntos
-                                    switch ($answer) {
-                                        case 'answer1_a':
-                                            $points = 4;
-                                            break;
-                                        case 'answer1_b':
-                                            $points = 3;
-                                            break;
-                                        case 'answer1_c':
-                                            $points = 2;
-                                            break;
-                                    }
-                                    echo $points;
+                                    // Obtener la primera imagen del producto
+                                    $productImages = $product->productImages;
+                                    $firstProductImage = !empty($productImages) ? $productImages[0] : null;
+
+                                    // Obtener las asignaciones de líneas de categoría para el producto
+                                    $catLineAssignments = $product->catLineAssignments;
                                     ?>
-                                </p>
-                            </td>
-                            <td>
-                                <p> 7 </p>
-                            </td>
-                            <td>
-                                <p><?= $points * 7; ?></p>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Obtención de la Materia Prima (Principal o inicial)</td>
-                                <?php $options = [
-                                    'Siembra/ Cría/ Manejo',
-                                    'Recolección/ Extracción',
-                                    'Reciclaje',
-                                    'Compra'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer2_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question2 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question2; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer2_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer2_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer2_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer2_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 3 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 3; ?></p>
-                                </td>
-                            </tr>
+                                    <?php if ($firstProductImage) : ?>
+                                        <?= Html::img($firstProductImage->proima_path, ['class' => 'product-image', 'alt' => 'Product Image']) ?>
+                                    <?php else : ?>
+                                        <p class='no-image'>No se encontró ninguna imagen para este producto.</p>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="info-container">
+                                    <p><strong>Producto a Evaluar:</strong> <?= $product->pro_name ?></p>
+                                    <p><strong>Descripción:</strong> <?= $product->pro_description ?></p>
+                                    <?php if (!empty($catLineAssignments)) : ?>
+                                        <?php foreach ($catLineAssignments as $catLineAssignment) : ?>
+                                            <p><strong>Línea de Categoría:</strong> <?= $catLineAssignment->cliasFkline->clin_name ?></p>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <p>No se han asignado líneas de categoría a este producto.</p>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="logo-container">
+                                    <?= Html::img('@web/upload/images/logo_ifat.jpg', ['class' => 'logo-image', 'alt' => 'Logo']) ?>
+                                </div>
+                            </div>
+                            <div class="button-container">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?= $product->pro_id ?>" aria-expanded="false" aria-controls="collapse<?= $product->pro_id ?>">
+                                    Ver cuestionario
+                                </button>
+                                <div class="btn btn-primary">
+                                    <?= Html::a('Descargar PDF', ['download-pdf', 'id' => $product->pro_id], ['class' => 'btn btn-primary']) ?>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 10px;"></div>
+                            <!-- Colapsable para el cuestionario -->
+                            <div class="collapse" id="collapse<?= $product->pro_id ?>">
+                                <!-- Primera tabla del cuestionario -->
+                                <table class="questionnaire-table" style="table-layout: fixed;">
+
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">Caracteristicas del producto</th>
+                                            <th colspan="4" style="text-align: center;">PUNTUACIÓN</th>
+                                            <th rowspan="2">VALOR (A)</th>
+                                            <th rowspan="2">PRIORIZACIÓN (B)</th>
+                                            <th rowspan="2">TOTAL (A*B)</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #235b4e;  color: white;">4</td>
+                                            <td style="background-color: #235b4e; color: white;">3</td>
+                                            <td style="background-color: #235b4e; color: white;">2</td>
+                                            <td style="background-color: #235b4e; color: white;">1</td>
 
 
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Forma de elaboración de la pieza</td>
-                                <?php $options = [
-                                    'Creación total de la pieza',
-                                    'Engarzado o cosido manualmente',
-                                    'Enfarzado o cosido con máquina',
-                                    'Ensamble con pegamento industrial'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer3_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question3 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question3; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer3_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer3_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer3_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer3_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 10 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 10; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Herramientas</td>
-                                <?php $options = [
-                                    'Manualmente',
-                                    'Herramientas adaptadas por el productor o alguien de la región',
-                                    'Maquinaria eléctrica',
-                                    'Herramientas comerciales'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer4_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question4 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question4; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer4_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer4_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer4_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer4_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 13 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 13; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Teñido/Pintado</td>
-                                <?php $options = [
-                                    'Colorantes, pigmentos naturales / al natural y esmalte para vidriado',
-                                    '',
-                                    'Material adquirido con color',
-                                    'Pinturas industriales',
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer5_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question5 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question5; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer5_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer5_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer5_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 6 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 6; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Tiempo de elaboración</td>
-                                <?php $options = [
-                                    'Más de 24 horas',
-                                    'De 9 a 24 horas',
-                                    'De 5 a 8 horas',
-                                    'Hasta 4 horas'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer6_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question6 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question6; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer6_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer6_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer6_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer6_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 8 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 8; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Diseño del producto</td>
-                                <?php $options = [
-                                    'Tradicional',
-                                    'Tradicional con Innovación',
-                                    'Nuevo / Neoartesanía',
-                                    'Estilos'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer7_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question7 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question7; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer7_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer7_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer7_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer7_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 20 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 20; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Representatividad</td>
-                                <?php $options = [
-                                    'Local / Región',
-                                    'Estado',
-                                    'País',
-                                    'No es representativo'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer8_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question8 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question8; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer8_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer8_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer8_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer8_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 20 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 20; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Uso del producto</td>
-                                <?php $options = [
-                                    'Ceremonia',
-                                    'Utilitario',
-                                    'Decorativo utilitario',
-                                    'Solo decorativo'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer9_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question9 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question9; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer9_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer9_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer9_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer9_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 2 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 2; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">División del trabajo</td>
-                                <?php $options = [
-                                    'Por género o por edad',
-                                    'Por especialidad',
-                                    'Individual',
-                                    'Sin división'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer10_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question10 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question10; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer10_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer10_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer10_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer10_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 2 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 2; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #dbece3; color: black;">Transmisión del conocimiento</td>
-                                <?php $options = [
-                                    'Herencia familiar/Legado cultural',
-                                    'Capacitación impartida por una institución o persona externa',
-                                    'Autoaprendizaje',
-                                    'Cursos'
-                                ]; ?>
-                                <?php foreach ($options as $index => $option) : ?>
-                                    <?php $answer = 'answer11_' . chr(97 + $index); ?>
-                                    <td style="<?= ($product->matrizDam->mdam_question11 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
-                                        <?= $option ?>
-                                    </td>
-                                <?php endforeach; ?>
-                                <td style="background-color: #dbece3;">
-                                    <p>
-                                        <?php
-                                        $answer = $product->matrizDam->mdam_question11; // Respuesta seleccionada
-                                        $points = 0; // Valor inicial de los puntos
-                                        switch ($answer) {
-                                            case 'answer11_a':
-                                                $points = 4;
-                                                break;
-                                            case 'answer11_b':
-                                                $points = 3;
-                                                break;
-                                            case 'answer11_c':
-                                                $points = 2;
-                                                break;
-                                            case 'answer11_d':
-                                                $points = 1;
-                                                break;
-                                        }
-                                        echo $points;
-                                        ?>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p> 9 </p>
-                                </td>
-                                <td>
-                                    <p><?= $points * 9; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="7">
-                                    Si el productor pertenece a un grupo étnico que elabora un producto tradicional o tradicional con innovación, agregue 20 puntos
-                                </td>
-                                <td>
-                                    <?php
-                                    $answer12 = $product->matrizDam->mdam_question12; // Respuesta de la pregunta 12
+                                        <td style="background-color: #dbece3; color: black;">Origen de la Materia Prima (Principal o inicial)</td>
+                                        <?php $options = ['Natural', 'Natural (Procesado industrialmente)', 'Artificial', '            ']; ?>
+                                        <?php foreach ($options as $index => $option) : ?>
+                                            <?php $answer = 'answer1_' . chr(97 + $index); ?>
+                                            <td style="<?= ($product->matrizDam->mdam_question1 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                <?= $option ?>
+                                            </td>
+                                        <?php endforeach; ?>
+                                        <td style="background-color: #dbece3;">
+                                            <p>
+                                                <?php
+                                                $answer = $product->matrizDam->mdam_question1; // Respuesta seleccionada
+                                                $points = 0; // Valor inicial de los puntos
+                                                switch ($answer) {
+                                                    case 'answer1_a':
+                                                        $points = 4;
+                                                        break;
+                                                    case 'answer1_b':
+                                                        $points = 3;
+                                                        break;
+                                                    case 'answer1_c':
+                                                        $points = 2;
+                                                        break;
+                                                }
+                                                echo $points;
+                                                ?>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p> 7 </p>
+                                        </td>
+                                        <td>
+                                            <p><?= $points * 7; ?></p>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Obtención de la Materia Prima (Principal o inicial)</td>
+                                            <?php $options = [
+                                                'Siembra/ Cría/ Manejo',
+                                                'Recolección/ Extracción',
+                                                'Reciclaje',
+                                                'Compra'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer2_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question2 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question2; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer2_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer2_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer2_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer2_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 3 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 3; ?></p>
+                                            </td>
+                                        </tr>
 
-                                    // Verificar la respuesta y mostrar los puntos correspondientes
-                                    if ($answer12 === 'answer12_a') {
-                                        echo "Si: 20";
-                                    } elseif ($answer12 === 'answer12_b') {
-                                        echo "No: 0";
-                                    }
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="7" style="text-align: right; background-color: #dbece3;">
-                                    Total General
-                                </td>
-                                <td style="background-color: green; color: white;">
-                                    <?= $product->pro_points ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
 
-                    <!-- Segunda tabla del cuestionario -->
-                    <div class="col-6" style="padding-top:2%">
-                        <table class="table questionnaire-table">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Rangos de clasificación</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="<?= ($product->pro_points >= 100 && $product->pro_points <= 220) ? 'background-color: green; color: white;' : ''; ?>">
-                                        <p>Manualidad</p>
-                                        <p>De 100 a 220 puntos</p>
-                                    </td>
-                                    <td style="<?= ($product->pro_points > 220 && $product->pro_points <= 279) ? 'background-color: green; color: white;' : ''; ?>">
-                                        <p>Híbrido</p>
-                                        <p>De 221 a 279 puntos</p>
-                                    </td>
-                                    <td style="<?= ($product->pro_points > 279 && $product->pro_points <= 420) ? 'background-color: green; color: white;' : ''; ?>">
-                                        <p>Artesanía</p>
-                                        <p>De 280 a 420 puntos</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Forma de elaboración de la pieza</td>
+                                            <?php $options = [
+                                                'Creación total de la pieza',
+                                                'Engarzado o cosido manualmente',
+                                                'Enfarzado o cosido con máquina',
+                                                'Ensamble con pegamento industrial'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer3_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question3 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question3; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer3_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer3_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer3_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer3_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 10 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 10; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Herramientas</td>
+                                            <?php $options = [
+                                                'Manualmente',
+                                                'Herramientas adaptadas por el productor o alguien de la región',
+                                                'Maquinaria eléctrica',
+                                                'Herramientas comerciales'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer4_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question4 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question4; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer4_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer4_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer4_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer4_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 13 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 13; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Teñido/Pintado</td>
+                                            <?php $options = [
+                                                'Colorantes, pigmentos naturales / al natural y esmalte para vidriado',
+                                                '',
+                                                'Material adquirido con color',
+                                                'Pinturas industriales',
+
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer5_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question5 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question5; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer5_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer5_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer5_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 6 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 6; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Tiempo de elaboración</td>
+                                            <?php $options = [
+                                                'Más de 24 horas',
+                                                'De 9 a 24 horas',
+                                                'De 5 a 8 horas',
+                                                'Hasta 4 horas'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer6_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question6 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question6; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer6_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer6_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer6_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer6_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 8 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 8; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Diseño del producto</td>
+                                            <?php $options = [
+                                                'Tradicional',
+                                                'Tradicional con Innovación',
+                                                'Nuevo / Neoartesanía',
+                                                'Estilos'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer7_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question7 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question7; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer7_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer7_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer7_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer7_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 20 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 20; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Representatividad</td>
+                                            <?php $options = [
+                                                'Local / Región',
+                                                'Estado',
+                                                'País',
+                                                'No es representativo'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer8_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question8 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question8; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer8_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer8_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer8_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer8_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 20 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 20; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Uso del producto</td>
+                                            <?php $options = [
+                                                'Ceremonia',
+                                                'Utilitario',
+                                                'Decorativo utilitario',
+                                                'Solo decorativo'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer9_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question9 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question9; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer9_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer9_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer9_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer9_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 2 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 2; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">División del trabajo</td>
+                                            <?php $options = [
+                                                'Por género o por edad',
+                                                'Por especialidad',
+                                                'Individual',
+                                                'Sin división'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer10_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question10 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question10; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer10_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer10_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer10_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer10_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 2 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 2; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dbece3; color: black;">Transmisión del conocimiento</td>
+                                            <?php $options = [
+                                                'Herencia familiar/Legado cultural',
+                                                'Capacitación impartida por una institución o persona externa',
+                                                'Autoaprendizaje',
+                                                'Cursos'
+                                            ]; ?>
+                                            <?php foreach ($options as $index => $option) : ?>
+                                                <?php $answer = 'answer11_' . chr(97 + $index); ?>
+                                                <td style="<?= ($product->matrizDam->mdam_question11 === $answer) ? 'background-color: #dbece3;' : ''; ?>">
+                                                    <?= $option ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                            <td style="background-color: #dbece3;">
+                                                <p>
+                                                    <?php
+                                                    $answer = $product->matrizDam->mdam_question11; // Respuesta seleccionada
+                                                    $points = 0; // Valor inicial de los puntos
+                                                    switch ($answer) {
+                                                        case 'answer11_a':
+                                                            $points = 4;
+                                                            break;
+                                                        case 'answer11_b':
+                                                            $points = 3;
+                                                            break;
+                                                        case 'answer11_c':
+                                                            $points = 2;
+                                                            break;
+                                                        case 'answer11_d':
+                                                            $points = 1;
+                                                            break;
+                                                    }
+                                                    echo $points;
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p> 9 </p>
+                                            </td>
+                                            <td>
+                                                <p><?= $points * 9; ?></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7">
+                                                Si el productor pertenece a un grupo étnico que elabora un producto tradicional o tradicional con innovación, agregue 20 puntos
+                                            </td>
+                                            <td>
+                                                <?php
+                                                $answer12 = $product->matrizDam->mdam_question12; // Respuesta de la pregunta 12
+
+                                                // Verificar la respuesta y mostrar los puntos correspondientes
+                                                if ($answer12 === 'answer12_a') {
+                                                    echo "Si: 20";
+                                                } elseif ($answer12 === 'answer12_b') {
+                                                    echo "No: 0";
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" style="text-align: right; background-color: #dbece3;">
+                                                Total General
+                                            </td>
+                                            <td style="background-color: green; color: white;">
+                                                <?= $product->pro_points ?>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- Segunda tabla del cuestionario -->
+                                <div class="col-6" style="padding-top:1%">
+                                    <table class="table questionnaire-table">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Rangos de clasificación</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="<?= ($product->pro_points >= 100 && $product->pro_points <= 220) ? 'background-color: green; color: white;' : ''; ?>">
+                                                    <p>Manualidad</p>
+                                                    <p>De 100 a 220 puntos</p>
+                                                </td>
+                                                <td style="<?= ($product->pro_points > 220 && $product->pro_points <= 279) ? 'background-color: green; color: white;' : ''; ?>">
+                                                    <p>Híbrido</p>
+                                                    <p>De 221 a 279 puntos</p>
+                                                </td>
+                                                <td style="<?= ($product->pro_points > 279 && $product->pro_points <= 420) ? 'background-color: green; color: white;' : ''; ?>">
+                                                    <p>Artesanía</p>
+                                                    <p>De 280 a 420 puntos</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         <?php endforeach; ?>
+
     </div>
-
-
 </div>
-
-
-
-
-
-
 
 <script>
     // Mostrar el formulario de rechazo al hacer clic en el botón "Rechazar"

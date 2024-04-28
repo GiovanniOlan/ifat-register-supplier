@@ -4,6 +4,7 @@ namespace app\modules\product\controllers;
 
 use Yii;
 use app\models\User;
+use yii\helpers\Url;
 use app\models\CatLine;
 use app\models\Product;
 use yii\web\Controller;
@@ -99,34 +100,14 @@ class ProductController extends Controller
         $matrizDamModel = new MatrizDam();
 
         $lineOptions = CatLine::find()->select(['clin_name', 'clin_id'])->indexBy('clin_id')->column();
-        $uploadPath = Yii::getAlias('@web/upload/images/');
-        if (!is_dir($uploadPath)) {
-            FileHelper::createDirectory($uploadPath);
-        }
         if (Yii::$app->request->isPost) {
-            // Cargar los datos del formulario y el modelo de producto
             $data = Yii::$app->request->post();
 
             $product->load($data);
 
-            // Obtener las imágenes cargadas
-            $productImages = UploadedFile::getInstances($product, 'productImages');
-
-            // Procesar las imágenes
-            foreach ($productImages as $image) {
-                // Guardar la imagen en el servidor
-                $imagePath = Yii::getAlias('@app/web/upload/images/') . $data['productImages'][0];
-
-                $image->saveAs($imagePath);
-
-                // Guardar la ruta de la imagen en la base de datos
-                $productImage = new ProductImage();
-                $productImage->proima_path = $imagePath;
-                $productImage->proima_fkproduct = $product->pro_id;
-                $productImage->save();
-            }
             $productLineAssignment->load($data);
             $matrizDamModel->load($data['Product'], '');
+            $productImage->load($data, '');
 
             //  pro_is_craft
             $totalPoints = $this->calculateTotalPoints($data); //  puntos 
@@ -139,6 +120,7 @@ class ProductController extends Controller
             } elseif ($totalPoints <= 100 && $totalPoints <= 220) {
                 $product->pro_is_craft = 3; // Manualidad
             }
+            $productImage->eventImage = UploadedFile::getInstanceByName('ProductImage[eventImage]');
 
             $product->pro_fkuser = $id;
 
@@ -153,23 +135,41 @@ class ProductController extends Controller
                         $product->pro_fkmdam = $matrizDamId;
 
                         if ($product->save()) {
-                            // Guardar la imagen
-                            $productImage->eventImage = UploadedFile::getInstance($productImage, 'eventImage');
-                            if ($productImage->eventImage) {
-                                if ($productImage->upload()) {
-                                    Yii::$app->session->setFlash('success', 'Imagen cargada exitosamente.');
+
+                            if ($productImage->eventImage !== null) {
+                                $tempFilePath = $productImage->eventImage->tempName;
+                                $fileMimeType = FileHelper::getMimeType($tempFilePath);
+
+                                if ($fileMimeType === 'image/png' || $fileMimeType === 'image/jpeg') {
+                                    $fileName = $productImage->eventImage->name;
+                                    $destinationPath = Yii::getAlias('@app/web/upload/images/products/') . $fileName;
+
+
+                                    if ($productImage->eventImage->saveAs($destinationPath)) {
+                                        $productImageModel = new ProductImage();
+                                        $productImageModel->proima_path = '@web/upload/images/products/' . $fileName;
+                                        $productImageModel->proima_fkproduct = $product->pro_id;
+                                        // Guardar el modelo en la base de datos
+                                        if ($productImageModel->save()) {
+                                        } else {
+                                            echo 'Hubo un error al guardar el modelo en la base de datos';
+                                        }
+                                    } else {
+                                        echo 'Hubo un error al mover el archivo';
+                                    }
                                 } else {
-                                    Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
+                                    echo 'El tipo de archivo no es compatible. Solo se permiten archivos PNG y JPEG.';
                                 }
                             }
+
                             return $this->redirect(['/product/index', 'id' => $id]);
+                        } else {
+                            // Hubo un error al guardar el producto en la base de datos
                         }
                     }
                 }
             }
         }
-
-
         return $this->render('_form', [
             'id' => $id,
             'product' => $product,
@@ -178,28 +178,6 @@ class ProductController extends Controller
             'lineOptions' => $lineOptions,
         ]);
     }
-    public function actionUploadImage()
-    {
-        $product_id = Yii::$app->request->post('product_id');
-        $uploadedFiles = UploadedFile::getInstancesByName('productImages');
-
-        foreach ($uploadedFiles as $file) {
-            $fileName = 'product_' . $product_id . '_' . Yii::$app->security->generateRandomString(10) . '.' . $file->extension;
-            $filePath = Yii::getAlias('@web/upload/images/') . $fileName;
-            if ($file->saveAs($filePath)) {
-                $productImage = new ProductImage();
-                $productImage->proima_path = $filePath;
-                $productImage->proima_fkproduct = $product_id;
-                $productImage->save();
-            } else {
-                Yii::error('Error al guardar la imagen: ' . $file->error);
-            }
-        }
-
-        return true; // Opcional: puedes devolver algún mensaje de éxito si lo deseas
-    }
-
-
     private function calculateTotalPoints($data)
     {
         //calcular los puntos totales del cuestionario

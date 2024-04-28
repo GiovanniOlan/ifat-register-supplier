@@ -6,4 +6,5 @@ return [
     'senderName' => 'Example.com mailer',
     'bsVersion' => '5.x',
     'bsDependencyEnabled' => false,
+    'uploadPath' => '@web/upload/images/products/',
 ];

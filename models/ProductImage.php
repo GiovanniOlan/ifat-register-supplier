@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 use app\models\Product;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "product_image".
@@ -32,8 +34,7 @@ class ProductImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['eventImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
-            ['proima_id', 'required'],
+            // [['eventImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'], 
             ['proima_path', 'required'],
             ['proima_fkproduct', 'required'],
 
@@ -71,21 +72,5 @@ class ProductImage extends \yii\db\ActiveRecord
     public function getProimaFkproduct()
     {
         return $this->hasOne(Product::class, ['pro_id' => 'proima_fkproduct']);
-    }
-    public function upload()
-    {
-        if ($this->validate()) {
-            $path = $this->uploadPath() . '/' . $this->id . '.' . $this->eventImage->extension;
-            if ($this->eventImage->saveAs($path)) {
-                $this->proima_path = '/uploads/' . $this->id . '.' . $this->eventImage->extension;
-                return $this->save();
-            }
-        }
-        return false;
-    }
-
-    public function uploadPath()
-    {
-        return Yii::getAlias('@app/web/upload/images');
     }
 }

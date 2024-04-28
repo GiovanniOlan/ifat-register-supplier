@@ -6,21 +6,21 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Admin</div>
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    <!-- <hr class="sidebar-divider my-0"> -->
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="index">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
-    </li>
+    </li> -->
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <!-- <hr class="sidebar-divider"> -->
 
     <!-- Heading -->
     <div class="sidebar-heading">
@@ -43,7 +43,7 @@
 </li> -->
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Utilities</span>
@@ -57,7 +57,7 @@
                 <a class="collapse-item" href="utilities-other.html">Other</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -89,16 +89,25 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="products">
+        <a class="nav-link" href="index">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Proveedores</span></a>
+            <span>Registros</span></a>
     </li>
+    <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="accepted-candidates">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <span>Candidatos Aceptados</span></a>
+    </li>
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="rejected-candidates">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Candidatos Rechazados</span></a>
     </li>
 
     <!-- Divider -->
@@ -111,12 +120,3 @@
 
 </ul>
 <!-- End of Sidebar -->
-<!-- Bootstrap core JavaScript-->
-<script src="/dashboard_template/vendor/jquery/jquery.min.js"></script>
-<script src="/dashboard_template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/dashboard_template/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/dashboard_template/js/sb-admin-2.min.js"></script>
