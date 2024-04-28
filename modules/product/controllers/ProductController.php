@@ -116,7 +116,7 @@ class ProductController extends Controller
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 if (!$product->validate() || !$productLineAssignment->validate() || !$matrizDamModel->validate()) {
-                    Yii::$app->session->setFlash('error', 'Por favor, conteste todas las respuestas.');
+                    Yii::$app->session->setFlash('error', 'Por favor, conteste todas las preguntas.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
 

@@ -13,9 +13,9 @@ class SupplierController extends \yii\web\Controller
 {
     use ContainerAwareTrait;
 
-    public function actionRegister($rfc)
+    public function actionRegister($curp)
     {
-        $supplierSearch = Supplier::findOne(['sup_rfc' => $rfc]);
+        $supplierSearch = Supplier::findOne(['sup_curp' => $curp]);
 
         if ($supplierSearch !== null) {
             return $this->redirect(['address/register', 'id' => $supplierSearch->sup_fkuser]);
@@ -23,7 +23,7 @@ class SupplierController extends \yii\web\Controller
 
         $supplier = new Supplier([
             'scenario' => Supplier::SCENARIO_SUPPLIER_REGISTER,
-            'sup_rfc' => $rfc,
+            'sup_curp' => $curp,
         ]);
         $person = new Person();
         $user = new User([
@@ -36,8 +36,8 @@ class SupplierController extends \yii\web\Controller
         if ($this->request->isPost && $supplier->load($dataPost) && $person->load($dataPost) && $user->load($dataPost)) {
             $transaction = \Yii::$app->db->beginTransaction();
             try {
-                $user->username = $supplier->sup_rfc;
-                $user->password = $supplier->sup_rfc;
+                $user->username = $supplier->sup_curp;
+                $user->password = $supplier->sup_curp;
                 if (!$user->save()) {
                     throw new \Exception();
                 }
@@ -58,13 +58,13 @@ class SupplierController extends \yii\web\Controller
                 $transaction->commit();
 
                 return $this->redirect(['/supplier/address/register', 'id' => $user->id]);
-              //  return $this->redirect(['/product/product/create', 'id' => $user->id]);
+                //  return $this->redirect(['/product/product/create', 'id' => $user->id]);
             } catch (\Exception $e) {
                 $transaction->rollBack();
             }
         }
 
-        return $this->render('_form', ['person' => $person, 'supplier' => $supplier, 'user' => $user, 'rfc' => $rfc]);
+        return $this->render('_form', ['person' => $person, 'supplier' => $supplier, 'user' => $user, 'curp' => $curp]);
     }
 
     public function actionSearch()
@@ -72,9 +72,9 @@ class SupplierController extends \yii\web\Controller
         $supplier = new Supplier();
 
         if (Yii::$app->request->post('Supplier')) {
-            $rfc = Yii::$app->request->post('Supplier')['sup_rfc'];
+            $curp = Yii::$app->request->post('Supplier')['sup_curp'];
 
-            return $this->redirect(['supplier/register', 'rfc' => $rfc]);
+            return $this->redirect(['supplier/register', 'curp' => $curp]);
         }
 
         return $this->render('index', compact('supplier'));

@@ -28,7 +28,7 @@ class Supplier extends \yii\db\ActiveRecord
         return ArrayHelper::merge(
             parent::scenarios(),
             [
-                self::SCENARIO_SUPPLIER_REGISTER => ['sup_phone', 'sup_curp'],
+                self::SCENARIO_SUPPLIER_REGISTER => ['sup_phone', 'sup_rfc'],
             ]
         );
     }
@@ -58,12 +58,12 @@ class Supplier extends \yii\db\ActiveRecord
 
             ['sup_rfc', 'unique'],
             ['sup_rfc', 'required'],
-            ['sup_rfc', 'string', 'min' => 11, 'max' => 13],
+            ['sup_rfc', 'string', 'min' => 10, 'max' => 13],
             ['sup_rfc', 'match', 'pattern' => '/^[A-Za-z0-9]*$/', 'message' => 'RFC solo debe contener letras y números'],
 
             ['sup_curp', 'required'],
             ['sup_curp', 'unique'],
-            ['sup_curp', 'string', 'max' => 18],
+            ['sup_curp', 'string', 'min' => 18, 'max' => 18],
             ['sup_curp', 'match', 'pattern' => '/^[A-Za-z0-9]*$/', 'message' => 'CURP solo debe contener letras y números'],
 
             ['sup_status', 'integer'],

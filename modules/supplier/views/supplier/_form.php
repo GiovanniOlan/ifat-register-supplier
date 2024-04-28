@@ -53,8 +53,8 @@ $this->title = 'Datos personales';
                 <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
-                            <?= $form->field($supplier, 'sup_rfc')->textInput([
-                                'disabled' => !$supplier->isAttributeActive('sup_rfc')
+                            <?= $form->field($supplier, 'sup_curp')->textInput([
+                                'disabled' => !$supplier->isAttributeActive('sup_curp')
                             ]) ?>
 
                         </div>
@@ -125,9 +125,9 @@ $this->title = 'Datos personales';
                 <div class="col-xxl-4 col-lg-4 col-sm-12">
                     <div class="mb-md-4 mb-3 custom-form">
                         <div class="custom-input">
-                            <?= $form->field($supplier, 'sup_curp', [
+                            <?= $form->field($supplier, 'sup_rfc', [
                                 'inputOptions' => [
-                                    'maxlength' => 18,
+                                    'maxlength' => 13,
                                     'style' => 'border: none; font-size: 14px; padding: calc(8px + (14 - 8) * ((100vw - 320px) / (1920 - 320))); line-height: 1.5; width: 100%; border-radius: 0.25rem;'
                                 ],
                                 'enableAjaxValidation' => true,

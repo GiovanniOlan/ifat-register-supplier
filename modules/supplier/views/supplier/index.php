@@ -34,14 +34,14 @@ $this->title = 'Búsqueda';
                                 <div>
                                     <div class="content card">
                                         <h2 style="color: #235b4e;">¿Quieres formar parte de nuestro padrón de artesanos?</h2>
-                                        <h3 style="color: #235b4e;">Escribe tu RFC para registrarte o consultar el estatus de tu solicitud</h3>
+                                        <h3 style="color: #235b4e;">Escribe tu CURP para registrarte o consultar el estatus de tu solicitud</h3>
                                         <div class="search-box">
                                             <?php $form = ActiveForm::begin(); ?>
-                                            <?= $form->field($supplier, 'sup_rfc', [
+                                            <?= $form->field($supplier, 'sup_curp', [
                                                 'inputOptions' => [
                                                     'maxlength' => true,
                                                     'class' => 'form-control form-control-lg rounded-3',
-                                                    'placeholder' => 'Ingresa tu RFC',
+                                                    'placeholder' => 'Ingresa tu CURP',
                                                     'style' => 'background-color: #D8EED9;'
                                                 ],
                                             ])->label(false)->textInput() ?>
