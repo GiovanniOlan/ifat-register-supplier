@@ -39,9 +39,22 @@ class MatrizDam extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['mdam_question1'], 'required'],
+            [['mdam_question2'], 'required'],
+            [['mdam_question3'], 'required'],
+            [['mdam_question4'], 'required'],
+            [['mdam_question5'], 'required'],
+            [['mdam_question6'], 'required'],
+            [['mdam_question7'], 'required'],
+            [['mdam_question8'], 'required'],
+            [['mdam_question9'], 'required'],
+            [['mdam_question10'], 'required'],
+            [['mdam_question11'], 'required'],
+            [['mdam_question12'], 'required'],
             [['mdam_question1', 'mdam_question2', 'mdam_question3', 'mdam_question4', 'mdam_question5', 'mdam_question6', 'mdam_question7', 'mdam_question8', 'mdam_question9', 'mdam_question10', 'mdam_question11', 'mdam_question12'], 'string', 'max' => 40],
         ];
     }
+
 
     /**
      * {@inheritdoc}

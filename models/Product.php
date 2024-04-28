@@ -20,7 +20,6 @@ use app\models\User;
  */
 class Product extends \yii\db\ActiveRecord
 {
-    // Agrega las propiedades para las preguntas del cuestionario
     public $question1;
     public $question2;
     public $question3;
@@ -50,8 +49,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             ['pro_name', 'required'],
             ['pro_description', 'required'],
-            ['pro_is_craft', 'required'],
-            ['pro_fkuser', 'required'],
+
 
             ['pro_is_craft', 'integer'],
             ['pro_fkuser', 'integer'],

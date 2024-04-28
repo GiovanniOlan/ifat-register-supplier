@@ -98,78 +98,94 @@ class ProductController extends Controller
         $productLineAssignment = new CatLineAssignment(); // asignación de línea
         $productImage = new ProductImage(); // imagebes'
         $matrizDamModel = new MatrizDam();
-
         $lineOptions = CatLine::find()->select(['clin_name', 'clin_id'])->indexBy('clin_id')->column();
+
         if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post();
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
 
-            $product->load($data);
+                $data = Yii::$app->request->post();
+                $product->load($data);
+                $productLineAssignment->load($data);
+                $matrizDamModel->load($data['Product'], '');
+                $productImage->load($data, '');
 
-            $productLineAssignment->load($data);
-            $matrizDamModel->load($data['Product'], '');
-            $productImage->load($data, '');
-
-            //  pro_is_craft
-            $totalPoints = $this->calculateTotalPoints($data); //  puntos 
-            $product->pro_points = $totalPoints;
-
-            if ($totalPoints >= 280 && $totalPoints <= 420) {
-                $product->pro_is_craft = 1; // Artesanía
-            } elseif ($totalPoints >= 221 && $totalPoints <= 279) {
-                $product->pro_is_craft = 2; // Híbrido
-            } elseif ($totalPoints <= 100 && $totalPoints <= 220) {
-                $product->pro_is_craft = 3; // Manualidad
-            }
-            $productImage->eventImage = UploadedFile::getInstanceByName('ProductImage[eventImage]');
-
-            $product->pro_fkuser = $id;
-
-            if ($product->save()) {
-                $productLineAssignment->clias_fkproduct = $product->pro_id;
-
-                if ($productLineAssignment->save()) {
-
-                    if ($matrizDamModel->save()) {
-                        $matrizDamId = $matrizDamModel->mdam_id;
-
-                        $product->pro_fkmdam = $matrizDamId;
-
-                        if ($product->save()) {
-
-                            if ($productImage->eventImage !== null) {
-                                $tempFilePath = $productImage->eventImage->tempName;
-                                $fileMimeType = FileHelper::getMimeType($tempFilePath);
-
-                                if ($fileMimeType === 'image/png' || $fileMimeType === 'image/jpeg') {
-                                    $fileName = $productImage->eventImage->name;
-                                    $destinationPath = Yii::getAlias('@app/web/upload/images/products/') . $fileName;
+                $uploadedImages = UploadedFile::getInstancesByName('ProductImage[eventImage]');
+                if (empty($uploadedImages)) {
+                    Yii::$app->session->setFlash('error', 'Debe subir al menos una imagen.');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+                if (!$product->validate() || !$productLineAssignment->validate() || !$matrizDamModel->validate()) {
+                    Yii::$app->session->setFlash('error', 'Por favor, conteste todas las respuestas.');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
 
 
-                                    if ($productImage->eventImage->saveAs($destinationPath)) {
-                                        $productImageModel = new ProductImage();
-                                        $productImageModel->proima_path = '@web/upload/images/products/' . $fileName;
-                                        $productImageModel->proima_fkproduct = $product->pro_id;
-                                        // Guardar el modelo en la base de datos
-                                        if ($productImageModel->save()) {
-                                        } else {
-                                            echo 'Hubo un error al guardar el modelo en la base de datos';
-                                        }
-                                    } else {
-                                        echo 'Hubo un error al mover el archivo';
-                                    }
+                $totalPoints = $this->calculateTotalPoints($data); //  puntos 
+                $product->pro_points = $totalPoints;
+
+                if ($totalPoints >= 280 && $totalPoints <= 420) {
+                    $product->pro_is_craft = 1; // Artesanía
+                } elseif ($totalPoints >= 221 && $totalPoints <= 279) {
+                    $product->pro_is_craft = 2; // Híbrido
+                } elseif ($totalPoints <= 100 && $totalPoints <= 220) {
+                    $product->pro_is_craft = 3; // Manualidad
+                }
+
+                $product->pro_fkuser = $id;
+
+                if ($product->save()) {
+                    $productLineAssignment->clias_fkproduct = $product->pro_id;
+                    if (!$productLineAssignment->save()) {
+                        throw new \yii\db\Exception('Error al guardar la asignación de línea.');
+                    }
+
+                    $matrizDamModel->save();
+                    $product->pro_fkmdam = $matrizDamModel->mdam_id;
+                    if (!$product->save()) {
+                        throw new \yii\db\Exception('Error al guardar el producto.');
+                    }
+
+                    $uploadedImages = \yii\web\UploadedFile::getInstancesByName('ProductImage[eventImage]');
+                    $savedImagesCount = 0;
+
+                    foreach ($uploadedImages as $uploadedImage) {
+                        if ($savedImagesCount < 3) {
+                            $productImageModel = new ProductImage();
+                            $productImageModel->proima_fkproduct = $product->pro_id;
+
+                            $fileName = $supplier->sup_curp . '_' . time() . '_' . $savedImagesCount . '.' . $uploadedImage->extension;
+                            $destinationPath = Yii::getAlias('@app/web/upload/images/products/') . $fileName;
+
+                            if ($uploadedImage->saveAs($destinationPath)) {
+                                $productImageModel->proima_path = '@web/upload/images/products/' . $fileName;
+
+                                if ($productImageModel->save()) {
+                                    $savedImagesCount++;
+                                    $productImageModels[] = $productImageModel;
                                 } else {
-                                    echo 'El tipo de archivo no es compatible. Solo se permiten archivos PNG y JPEG.';
+                                    throw new \yii\db\Exception('Error al guardar la imagen.');
                                 }
+                            } else {
+                                throw new \yii\db\Exception('Error al mover el archivo.');
                             }
-
-                            return $this->redirect(['/product/index', 'id' => $id]);
                         } else {
-                            // Hubo un error al guardar el producto en la base de datos
+                            throw new \yii\base\InvalidParamException('El límite máximo de imágenes ha sido alcanzado.');
                         }
                     }
+
+                    $transaction->commit();
+                    return $this->redirect(['/product/index', 'id' => $id]);
+                } else {
+                    throw new \yii\db\Exception('Error al guardar el producto.');
                 }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::error($e->getMessage());
+                Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
+
         return $this->render('_form', [
             'id' => $id,
             'product' => $product,

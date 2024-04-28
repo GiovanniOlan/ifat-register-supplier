@@ -32,7 +32,7 @@ class CatLineAssignment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['clias_fkproduct', 'required'],
+
             ['clias_fkline', 'required'],
             ['clias_fkproduct', 'integer'],
             ['clias_fkline', 'integer'],

@@ -85,6 +85,30 @@ $this->title = 'Producto';
     input[type="radio"] {
         display: none;
     }
+
+    .custom-file-input-container {
+        padding-left: 10px;
+    }
+
+    .custom-file-input-container .kv-file-zoom {
+        margin-left: 40px;
+    }
+
+    .custom-file-input-container .kv-file-remove {
+        margin-left: 40px;
+    }
+
+    .custom-file-input-container .kv-file-upload {
+        margin-left: 10px;
+    }
+
+    .btn.btn-default.btn-outline-secondary.fileinput-remove.fileinput-remove-button {
+        margin-left: 10px;
+    }
+
+    .btn.btn-default.btn-outline-secondary.fileinput-upload.fileinput-upload-button {
+        margin-right: 1px;
+    }
 </style>
 <section class="contact-box-section">
 
@@ -92,6 +116,12 @@ $this->title = 'Producto';
     <div class="right-sidebar-box card">
 
         <h3 style="color: #235b4e;">Rellena los datos correspondientes a tu producto</h3>
+        <?php if (Yii::$app->session->hasFlash('error')) : ?>
+            <div class="alert alert-danger">
+                <?= Yii::$app->session->getFlash('error') ?>
+            </div>
+        <?php endif; ?>
+
         <div style="margin-top: 20px;"></div>
         <?= Html::beginForm('', 'post', ['enctype' => 'multipart/form-data']) ?>
 
@@ -121,19 +151,27 @@ $this->title = 'Producto';
         <div class="row">
             <div class="col-xxl-4 col-lg-6 col-sm-12">
                 <div class="mb-md-8 mb-3 custom-form">
-                    <div class="custom-input" style="display: block; align-items: stretch;">
+                    <label for="image">Sube hasta 3 fotos de tu producto:</label>
+                    <div class="custom-file-input-container" style="display: block; align-items: stretch;">
                         <?php
                         echo FileInput::widget([
-                            'name' => 'ProductImage[eventImage]',
+                            'name' => 'ProductImage[eventImage][]', // Cambia el nombre para que sea un array
                             'language' => 'es',
+                            'options' => ['multiple' => true], // Permite la carga de múltiples archivos
                             'pluginOptions' => [
                                 'showPreview' => true,
-                                'showCaption' => false,
-                                'elCaptionText' => '#customCaption'
-                            ]
+                                'showCaption' => true,
+                                'showUpload' => false,
+
+
+                                'allowedFileExtensions' => ['jpg', 'jpeg', 'png'],
+                                'maxFileCount' => 3,
+                            ],
                         ]);
                         ?>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -385,8 +423,6 @@ $this->title = 'Producto';
         <?= Html::submitButton('Guardar Producto', ['class' => 'btn btn-success mr-2', 'style' => 'background-color: #235b4e; color: white;']) ?>
         <!-- </form> -->
         <?= Html::endForm() ?>
-
-
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
