@@ -42,7 +42,7 @@ $this->title = 'Status';
 
         <h2 class="card-title">Estado de la solicitud: En Revision</h2>
         <p class="card-text">Estamos revisando tus datos, este proceso puede tardar un poco</p>
-        <img src="/upload/images/gaaldi23.jpg" alt="Proceso de Aceptación" class="smaller-image">
+        <img src="/template/images/espera.jpg" alt="Proceso de Aceptación" class="smaller-image" style="max-width: 50%; ">
     </div>
 
 </div>

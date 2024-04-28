@@ -42,8 +42,9 @@ $this->title = 'Status';
 
         <h2 class="card-title">Solicitud Rechazada</h2>
         <p class="card-text">Lamentamos informarte que tu solicitud ha sido rechazada, motivo: </p>
+        <p><?= $rejectedMessage->mess_reason ?></p>
         <p class="card-text">Mantente al tanto de nuestros sitios oficiales para futuras oportunidades</p>
-        <img src="/upload/images/gaaldi23.jpg" alt="Proceso de Aceptación" class="smaller-image">
+        <img src="/template/images/rechazo.png" alt="Proceso de Aceptación" class="smaller-image" style="max-width: 20%; ">
     </div>
 
 </div>

@@ -437,7 +437,7 @@ use yii\helpers\ArrayHelper;
                 $base64Img = 'data:image/' . $imgType . ';base64,' . base64_encode($imgData);
 
             ?>
-                <img src="<?= $base64Img ?>" class="product-image" alt="Product Image">
+                <img src="<?= $base64Img ?>" class="product-image" alt="Product Image" style="max-height: 150px">
             <?php } else { ?>
                 <p class="no-image">No se encontró ninguna imagen para este producto.</p>
             <?php } ?>

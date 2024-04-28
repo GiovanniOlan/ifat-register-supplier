@@ -3,20 +3,15 @@
 namespace app\modules\administration\controllers;
 
 use Yii;
-use Mpdf\Mpdf;
 use yii\db\Query;
 use Dompdf\Dompdf;
-use Dompdf\Option;
 use Dompdf\Options;
 use app\models\User;
-use kartik\mpdf\Pdf;
 use app\models\Message;
 use app\models\Product;
 use yii\web\Controller;
 use app\models\Supplier;
-use app\models\ProductImage;
 use yii\httpclient\Response;
-use app\models\CatLineAssignment;
 use yii\web\NotFoundHttpException;
 
 /**

@@ -42,7 +42,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     <?= $this->render('header') ?>
 
-    <?= $this->render('menu-start-mobile') ?>
+
 
     <?= $content ?>
 

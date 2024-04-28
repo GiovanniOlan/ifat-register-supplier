@@ -387,6 +387,12 @@ use yii\widgets\ActiveForm;
         margin-right: 10px;
         /* Espacio entre los botones */
     }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+        /* Ancho reducido */
+    }
 </style>
 
 <div class="row">
@@ -540,15 +546,12 @@ use yii\widgets\ActiveForm;
                             <div class="product-container">
                                 <div class="image-container">
                                     <?php
-                                    // Obtener la primera imagen del producto
                                     $productImages = $product->productImages;
                                     $firstProductImage = !empty($productImages) ? $productImages[0] : null;
-
-                                    // Obtener las asignaciones de líneas de categoría para el producto
                                     $catLineAssignments = $product->catLineAssignments;
                                     ?>
                                     <?php if ($firstProductImage) : ?>
-                                        <?= Html::img($firstProductImage->proima_path, ['class' => 'product-image', 'alt' => 'Product Image']) ?>
+                                        <?= Html::img($firstProductImage->proima_path, ['class' => 'product-image', 'alt' => 'Product Image', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_' . $product->pro_id]) ?>
                                     <?php else : ?>
                                         <p class='no-image'>No se encontró ninguna imagen para este producto.</p>
                                     <?php endif; ?>
@@ -568,6 +571,43 @@ use yii\widgets\ActiveForm;
                                     <?= Html::img('@web/upload/images/logo_ifat.jpg', ['class' => 'logo-image', 'alt' => 'Logo']) ?>
                                 </div>
                             </div>
+                            <?php if (!empty($productImages)) : ?>
+                                <div class="modal fade" id="exampleModal_<?= $product->pro_id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" style="max-width: 700px; max-height: 200px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Imágenes del Producto</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="carouselExampleIndicators_<?= $product->pro_id ?>" class="carousel slide" data-ride="carousel">
+                                                    <div class="carousel-inner">
+                                                        <?php foreach ($productImages as $index => $productImage) : ?>
+                                                            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                                                <?= Html::img($productImage->proima_path, ['class' => 'd-block w-100 img-fluid', 'alt' => 'Product Image', 'style' => 'max-width: 100%;  margin: auto;']) ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                    <?php if (count($productImages) > 1) : ?>
+                                                        <a class="carousel-control-prev" href="#carouselExampleIndicators_<?= $product->pro_id ?>" role="button" data-slide="prev" style="background-color: rgba(0, 0, 0, 0.5); color: black;">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next" href="#carouselExampleIndicators_<?= $product->pro_id ?>" role="button" data-slide="next" style="background-color: rgba(0, 0, 0, 0.5); color: white;">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
                             <div class="button-container">
                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<?= $product->pro_id ?>" aria-expanded="false" aria-controls="collapse<?= $product->pro_id ?>">
                                     Ver cuestionario
@@ -1145,5 +1185,10 @@ use yii\widgets\ActiveForm;
     // Mostrar el formulario de rechazo al hacer clic en el botón "Rechazar"
     $('#rejectBtn').click(function() {
         $('#rejectFormContainer').show();
+    });
+    $(document).ready(function() {
+        $('.product-image').click(function() {
+            $('#exampleModal').modal('show');
+        });
     });
 </script>
