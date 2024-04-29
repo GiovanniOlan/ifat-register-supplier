@@ -8,6 +8,51 @@ main > .container {
     height: 60px;
 }
 
+.card-questionnaire {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+.custom-gender {
+    padding: none;
+}
+.card-product-index {
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-right: 30px;
+        margin-left: 30px;
+        margin-bottom: 15px;
+    }
+    .custom-input-product-form {
+      display: flex;
+      align-items: center;
+  }
+
+  .custom-input-product-form label {
+      margin-right: 10px;
+  }
+
+  .custom-input-product-form input[type="text"] {
+      display: inline-block;
+      width: 60%;
+      border: none;
+      height: 30px;
+      border-radius: 5px;
+  }
+
+  .custom-input-product-form textarea {
+      border-radius: 5px;
+      display: inline-block;
+      width: 60%;
+      border: none;
+  }
 .footer > .container {
     padding-right: 15px;
     padding-left: 15px;

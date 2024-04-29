@@ -1,3 +1,7 @@
+<?php
+/* @var $this yii\web\View */
+$this->title = 'Mi Vista Protegida';
+?>
 <style>
     body {
         color: #566787;

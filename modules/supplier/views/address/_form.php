@@ -14,23 +14,13 @@ AppAsset::register($this);
  *
  * @author Leonardo <leonardoesaug@gmail.com>
  */
+
+$this->title = 'Dirección';
 ?>
 
-<h1><?= Html::encode($this->title) ?></h1>
 <div class="address-create">
-    <style>
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            margin-right: 30px;
-            margin-left: 30px;
-            margin-bottom: 15px;
-        }
-    </style>
     <section class="contact-box-section">
-        <div class="right-sidebar-box card">
+        <div class="right-sidebar-box card-questionnaire">
 
             <h3 style="color: #235b4e;">Direccion</h3>
 
