@@ -27,7 +27,7 @@
                             </a>
 
 
-                            <ul class="right-side-menu">
+                            <!-- <ul class="right-side-menu">
 
 
                                 <li class="right-side">
@@ -70,7 +70,7 @@
                                         </ul>
                                     </div>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
                 </div>

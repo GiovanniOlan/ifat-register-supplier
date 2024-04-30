@@ -12,6 +12,7 @@ use app\models\Product;
 use yii\web\Controller;
 use app\models\Supplier;
 use yii\httpclient\Response;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -19,6 +20,33 @@ use yii\web\NotFoundHttpException;
  */
 class AdministrationController extends Controller
 {
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // 'actions' => ['all', 'pdf'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            // 'verbs' => [
+            //     'class' => VerbFilter::class,
+            //     'actions' => [
+            //         'make-no-editable' => ['post'],
+            //         'cancel' => ['post'],
+            //         'accept' => ['post'],
+            //     ],
+            // ],
+            // 'ajax' => [
+            //     'class' => AjaxFilter::class,
+            //     'only' => ['make-no-editable', 'cancel', 'accept'],
+            // ],
+        ]);
+    }
     public $layout = "@app/views/layouts2/main";
     /**
      * Renders the index view for the module
