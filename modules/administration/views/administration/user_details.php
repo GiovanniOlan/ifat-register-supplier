@@ -393,6 +393,122 @@ use yii\widgets\ActiveForm;
         width: 5%;
         /* Ancho reducido */
     }
+
+    /* Estilos específicos para pantallas pequeñas */
+    @media screen and (max-width: 768px) {
+
+        /* Cambiar a diseño de columna */
+        .product-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        /* Asegurar que todos los elementos ocupen el ancho completo */
+        .image-container,
+        .info-container,
+        .logo-container {
+            flex-basis: 100%;
+        }
+
+        /* Estilos para la imagen del producto */
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Estilos para la imagen del logo */
+        .logo-image {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    /* Estilos para pantallas pequeñas */
+    @media screen and (max-width: 768px) {
+
+        .questionnaire-table.first-table thead,
+        .questionnaire-table.first-table th:nth-last-child(-n+3),
+        .questionnaire-table.first-table td:nth-last-child(-n+3) {
+            display: none;
+            /* Ocultar encabezado y columnas finales en pantallas pequeñas */
+        }
+
+        .questionnaire-table.first-table,
+        .questionnaire-table.first-table tbody,
+        .questionnaire-table.first-table tr,
+        .questionnaire-table.first-table td {
+            display: block;
+            /* Convertir la tabla en un diseño de bloque */
+            width: 100%;
+            /* Ajustar el ancho */
+        }
+
+        .questionnaire-table.first-table td {
+            text-align: center;
+            /* Centrar el texto */
+        }
+
+        .questionnaire-table.first-table td:first-child {
+            font-weight: bold;
+            /* Hacer negrita la primera columna */
+        }
+
+        .questionnaire-table.first-table td:before {
+            content: attr(data-label);
+            /* Mostrar etiqueta de columna */
+            float: left;
+            font-weight: bold;
+        }
+    }
+
+    /* Estilos para pantallas pequeñas */
+    @media screen and (max-width: 768px) {
+        .questionnaire-table.second-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .questionnaire-table.second-table th,
+        .questionnaire-table.second-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            width: 100%;
+            /* Ancho completo en pantallas pequeñas */
+        }
+
+        .questionnaire-table.second-table th {
+            background-color: #f2f2f2;
+            display: none;
+            /* Ocultar el título en pantallas pequeñas */
+        }
+
+        .questionnaire-table.second-table td {
+            text-align: center;
+            /* Centrar el texto */
+            font-weight: bold;
+            /* Hacer negrita la primera columna */
+        }
+
+        .questionnaire-table.second-table td:before {
+            content: attr(data-label);
+            /* Mostrar etiqueta de columna */
+            float: left;
+            font-weight: bold;
+        }
+
+        .questionnaire-table.second-table,
+        .questionnaire-table.second-table tbody,
+        .questionnaire-table.second-table tr,
+        .questionnaire-table.second-table td {
+            display: block;
+            /* Convertir la tabla en un diseño de bloque */
+            width: 100%;
+            /* Ajustar el ancho */
+        }
+    }
 </style>
 
 <div class="row">
@@ -483,7 +599,7 @@ use yii\widgets\ActiveForm;
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <p><span class="rounded-border"><strong>Género:</strong> <?= ($person->per_gender == 1) ? 'Masculino' : 'Femenino' ?></span> &nbsp;&nbsp;&nbsp;
+            <p><span class="rounded-border"><strong>Género:</strong> <?= ($person->per_gender == 1) ? 'Femenino' : 'Masculino' ?></span> &nbsp;&nbsp;&nbsp;
                 <span class="rounded-border"><strong>Teléfono:</strong> <?= $supplier->sup_phone ?></span> &nbsp;&nbsp;&nbsp; <span class="rounded-border"><strong>CURP:</strong> <?= $supplier->sup_curp ?></span> &nbsp;&nbsp;&nbsp; <span class="rounded-border"><strong>RFC:</strong> <?= $supplier->sup_rfc ?></span>
             </p>
             <h2> Dirección </h2>
@@ -539,7 +655,8 @@ use yii\widgets\ActiveForm;
 
         <?php foreach ($products as $product) : ?>
             <div style="margin-top: 20px;"></div>
-            <div class="container">
+            <div class="table-responsive">
+
                 <div class="card">
                     <div class="card-body">
                         <div>
@@ -621,7 +738,7 @@ use yii\widgets\ActiveForm;
                             <!-- Colapsable para el cuestionario -->
                             <div class="collapse" id="collapse<?= $product->pro_id ?>">
                                 <!-- Primera tabla del cuestionario -->
-                                <table class="questionnaire-table" style="table-layout: fixed;">
+                                <table class="questionnaire-table first-table" style="table-layout: fixed;">
 
                                     <thead>
                                         <tr>
@@ -1147,7 +1264,7 @@ use yii\widgets\ActiveForm;
 
                                 <!-- Segunda tabla del cuestionario -->
                                 <div class="col-6" style="padding-top:1%">
-                                    <table class="table questionnaire-table">
+                                    <table class="table questionnaire-table second-table">
                                         <thead>
                                             <tr>
                                                 <th colspan="3">Rangos de clasificación</th>

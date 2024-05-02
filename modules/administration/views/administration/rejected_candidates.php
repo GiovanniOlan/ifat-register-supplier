@@ -276,7 +276,7 @@
     </div>
     <div class="col-lg-12">
 
-        <div class="container">
+        <div class="row">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
