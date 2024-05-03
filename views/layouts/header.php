@@ -19,17 +19,18 @@
                     <div class="navbar-top">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="dropdown d-md-none">
-                                <a class="web-logo nav-logo dropdown-toggle" href="#" role="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                                <a class="web-logo nav-logo dropdown-toggle" href="/supplier/search" role="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
                                     <h2 class="logo-title">tabasco.gob.mx</h2>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/supplier/search">Inicio</a>
                                     <a class="dropdown-item" href="https://transparencia.tabasco.gob.mx">Transparencia</a>
                                     <a class="dropdown-item" href="https://transparencia.tabasco.gob.mx/">Gobierno</a>
                                     <a class="dropdown-item" href="https://tabasco.gob.mx/noticias">Noticias</a>
                                     <a class="dropdown-item" href="https://tabasco.gob.mx/tramites-y-servicios">Trámites</a>
                                 </div>
                             </div>
-                            <a class="web-logo nav-logo d-none d-md-block" href="#" style="color: white;">
+                            <a class="web-logo nav-logo d-none d-md-block" href="/supplier/search" style="color: white;">
                                 <h2 class="logo-title">tabasco.gob.mx</h2>
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

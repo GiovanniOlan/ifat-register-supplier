@@ -118,6 +118,7 @@ $this->title = 'Datos personales';
                                 ],
                                 'enableAjaxValidation' => true,
                             ]) ?>
+                            <span class="text-muted small">*Si no cuentas con RFC, pon los primeros 10 dígitos de tu CURP</span>
                         </div>
                     </div>
                 </div>

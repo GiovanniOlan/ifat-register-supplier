@@ -93,6 +93,15 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Registros</span></a>
     </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="pending-candidates">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Candidatos Por Validar</span></a>
+    </li>
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Nav Item - Tables -->

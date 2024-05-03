@@ -1,3 +1,7 @@
+<?php
+/* @var $this yii\web\View */
+$this->title = 'Mi Vista Protegida';
+?>
 <style>
     body {
         color: #566787;
@@ -282,9 +286,10 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-xs-5">
-                                <h2>Candidatos Rechazados</h2>
+                                <h2>Candidatos Por Validar</h2>
                             </div>
                             <div class="col-xs-7">
+
                                 <!-- <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Exportar usuarios</span></a> -->
                             </div>
                         </div>
@@ -340,4 +345,42 @@
     </div>
 
 </div>
+<?php
+$this->registerJs('
+    $(document).ready(function() {
+        $(".accept, .reject").on("click", function(e) {
+            e.preventDefault();
+            var status = $(this).data("status");
+            var confirmationMessage = "¿Estás seguro de que deseas aplicar esta modificación?";
+            if (confirm(confirmationMessage)) {
+                var userId = $(this).closest("tr").find(".user-id").text(); // Obtener el ID de usuario
+                updateUserStatus(userId, status);
+            }
+        });
+
+        function updateUserStatus(userId, status) {
+            $.ajax({
+                url: "url_para_actualizar_estado_del_proveedor",
+                type: "POST",
+                data: {
+                    userId: userId,
+                    status: status
+                },
+                success: function(response) {
+                    // Manejar la respuesta del servidor
+                    if (response.success) {
+                        // Actualización exitosa, recargar la página o actualizar la fila afectada
+                        window.location.reload(); // Recargar la página
+                    } else {
+                        alert("Hubo un error al actualizar el estado del proveedor.");
+                    }
+                },
+                error: function() {
+                    alert("Error de conexión con el servidor. Por favor, inténtelo de nuevo más tarde.");
+                }
+            });
+        }
+    });
+');
+?>
 <!-- </body> -->

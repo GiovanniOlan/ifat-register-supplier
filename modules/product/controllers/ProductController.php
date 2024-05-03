@@ -81,6 +81,21 @@ class ProductController extends Controller
             'hasProducts' => $hasProducts,
         ]);
     }
+    public function actionDelete($id)
+    {
+        $product = Product::findOne($id);
+        if ($product !== null) {
+            $userId = $product->pro_fkuser; // Obtén el ID del usuario antes de eliminar el producto
+            $product->delete();
+            Yii::$app->session->setFlash('success', 'El producto se eliminó correctamente.');
+        } else {
+            Yii::$app->session->setFlash('error', 'No se pudo encontrar el producto.');
+        }
+
+        return $this->redirect(['index', 'id' => $userId]); // Redirige a la página de la lista de productos del usuario.
+    }
+
+
 
     public function actionCreate($id)
     {

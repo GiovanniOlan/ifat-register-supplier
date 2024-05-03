@@ -17,7 +17,7 @@ AppAsset::register($this);
  *
  * @author Leonardo <leonardoesaug@gmail.com>
  */
-$this->title = 'Producto';
+$this->title = 'Agregar Producto';
 ?>
 <style>
     .questionnaire-table th,
@@ -87,9 +87,20 @@ $this->title = 'Producto';
                 </div>
             </div>
         </div>
-
         <div class="row">
-
+            <div class="col-xxl-4 col-lg-4 col-sm-12">
+                <div class="mb-md-4 mb-3 custom-form">
+                    <div class="custom-input-product-form">
+                        <label for="productLine" class="form-label">Línea:</label>
+                        <select name="CatLineAssignment[clias_fkline]" id="productLine" class="form-select" style="border: none;">
+                            <option value="" disabled selected>Seleccione una línea de producto</option>
+                            <?php foreach ($lineOptions as $key => $value) : ?>
+                                <option value="<?= $key ?>"><?= $value ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-xxl-4 col-lg-6 col-sm-12">
@@ -110,22 +121,6 @@ $this->title = 'Producto';
                             ],
                         ]);
                         ?>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xxl-4 col-lg-6 col-sm-12">
-                <div class="mb-md-4 mb-3 custom-form">
-                    <div class="custom-input-product-form">
-                        <label for="productLine" class="form-label">Seleccionar línea de producto:</label>
-                        <select name="CatLineAssignment[clias_fkline]" id="productLine" class="form-select" style="border: none;">
-                            <?php foreach ($lineOptions as $key => $value) : ?>
-                                <option value="<?= $key ?>"><?= $value ?></option>
-                            <?php endforeach; ?>
-                        </select>
                     </div>
                 </div>
             </div>

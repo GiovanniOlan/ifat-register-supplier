@@ -119,6 +119,17 @@
 
         // Ocultar el botón "Cancelar" 
         $('#cancelBtn').hide();
+
+        document.getElementById("indexDiv").addEventListener("click", function() {
+            window.location.href = "index";
+        });
+        document.getElementById("indexDiv2").addEventListener("click", function() {
+            window.location.href = "index";
+        });
+
+        document.getElementById("pendingDiv").addEventListener("click", function() {
+            window.location.href = "pending-candidates";
+        });
     </script>
 </body>
 

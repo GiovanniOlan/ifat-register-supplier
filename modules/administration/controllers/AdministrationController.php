@@ -138,13 +138,17 @@ class AdministrationController extends Controller
         $countSuppliersToday = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
-            ->where(['DATE(created_at)' => date('Y-m-d')])
+            ->where([
+                'DATE(created_at)' => date('Y-m-d'),
+                'sup_finished' => 2
+            ])
             ->scalar();
 
         // Consulta para obtener el número total de proveedores registrados
         $countTotalSuppliers = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
+            ->where(['supplier.sup_finished' => 2])
             ->scalar();
 
         // Consulta para obtener el número total de Productos registrados
@@ -157,7 +161,10 @@ class AdministrationController extends Controller
         $countActiveSuppliers = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
-            ->where(['sup_status' => 1])
+            ->where([
+                'sup_status' => 1,
+                'sup_finished' => 2
+            ])
             ->scalar();
 
 
@@ -170,25 +177,32 @@ class AdministrationController extends Controller
         ]);
     }
 
-    public function actionAcceptedCandidates()
+    public function actionPendingCandidates()
     {
         // Obtener todos los usuarios registrados
         $users = User::find()
             ->joinWith('suppliers')
-            ->where(['supplier.sup_status' => 2])
+            ->where([
+                'supplier.sup_finished' => 2,
+                'supplier.sup_status' => 1,
+            ])
             ->all();
 
         // Consulta para obtener el número de proveedores registrados hoy
         $countSuppliersToday = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
-            ->where(['DATE(created_at)' => date('Y-m-d')])
+            ->where([
+                'DATE(created_at)' => date('Y-m-d'),
+                'sup_finished' => 2
+            ])
             ->scalar();
 
         // Consulta para obtener el número total de proveedores registrados
         $countTotalSuppliers = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
+            ->where(['supplier.sup_finished' => 2])
             ->scalar();
 
         // Consulta para obtener el número total de Productos registrados
@@ -201,7 +215,60 @@ class AdministrationController extends Controller
         $countActiveSuppliers = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
-            ->where(['sup_status' => 1])
+            ->where([
+                'sup_status' => 1,
+                'sup_finished' => 2
+            ])
+            ->scalar();
+
+
+        return $this->render('pending_candidates', [
+            'users' => $users,
+            'countSuppliersToday' => $countSuppliersToday,
+            'countTotalSuppliers' => $countTotalSuppliers,
+            'countTotalProduct' => $countTotalProduct,
+            'countActiveSuppliers' => $countActiveSuppliers,
+        ]);
+    }
+    public function actionAcceptedCandidates()
+    {
+        // Obtener todos los usuarios registrados
+        $users = User::find()
+            ->joinWith('suppliers')
+            ->where(['supplier.sup_status' => 2])
+            ->all();
+
+        // Consulta para obtener el número de proveedores registrados hoy
+        $countSuppliersToday = (new Query())
+            ->select('COUNT(*)')
+            ->from('supplier')
+            ->where([
+                'DATE(created_at)' => date('Y-m-d'),
+                'sup_finished' => 2
+            ])
+            ->scalar();
+
+        // Consulta para obtener el número total de proveedores registrados
+        $countTotalSuppliers = (new Query())
+            ->select('COUNT(*)')
+            ->from('supplier')
+            ->where(['supplier.sup_finished' => 2])
+            ->scalar();
+
+        // Consulta para obtener el número total de Productos registrados
+        $countTotalProduct = (new Query())
+            ->select('COUNT(*)')
+            ->from('product')
+            ->scalar();
+
+        // Consulta para obtener el número de proveedores con sup_status igual a 1
+        $countActiveSuppliers = (new Query())
+            ->select('COUNT(*)')
+            ->from('supplier')
+            ->where([
+                'sup_status' => 1,
+                'sup_finished' => 2
+            ])
             ->scalar();
 
 
@@ -226,13 +293,17 @@ class AdministrationController extends Controller
         $countSuppliersToday = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
-            ->where(['DATE(created_at)' => date('Y-m-d')])
+            ->where([
+                'DATE(created_at)' => date('Y-m-d'),
+                'sup_finished' => 2
+            ])
             ->scalar();
 
         // Consulta para obtener el número total de proveedores registrados
         $countTotalSuppliers = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
+            ->where(['supplier.sup_finished' => 2])
             ->scalar();
 
         // Consulta para obtener el número total de Productos registrados
@@ -245,7 +316,10 @@ class AdministrationController extends Controller
         $countActiveSuppliers = (new Query())
             ->select('COUNT(*)')
             ->from('supplier')
-            ->where(['sup_status' => 1])
+            ->where([
+                'sup_status' => 1,
+                'sup_finished' => 2
+            ])
             ->scalar();
 
 
@@ -324,12 +398,38 @@ class AdministrationController extends Controller
             return $this->redirect(['confirmation-page']);
         }
 
-        // --------------------------------------------------------------
-        // Consultas para obtener estadísticas
-        $countSuppliersToday = Supplier::find()->where(['DATE(created_at)' => date('Y-m-d')])->count();
-        $countTotalSuppliers = Supplier::find()->count();
-        $countTotalProduct = Product::find()->count();
-        $countActiveSuppliers = Supplier::find()->where(['sup_status' => 1])->count();
+
+        $countSuppliersToday = (new Query())
+            ->select('COUNT(*)')
+            ->from('supplier')
+            ->where([
+                'DATE(created_at)' => date('Y-m-d'),
+                'sup_finished' => 2
+            ])
+            ->scalar();
+
+        // Consulta para obtener el número total de proveedores registrados
+        $countTotalSuppliers = (new Query())
+            ->select('COUNT(*)')
+            ->from('supplier')
+            ->where(['supplier.sup_finished' => 2])
+            ->scalar();
+
+        // Consulta para obtener el número total de Productos registrados
+        $countTotalProduct = (new Query())
+            ->select('COUNT(*)')
+            ->from('product')
+            ->scalar();
+
+        // Consulta para obtener el número de proveedores con sup_status igual a 1
+        $countActiveSuppliers = (new Query())
+            ->select('COUNT(*)')
+            ->from('supplier')
+            ->where([
+                'sup_status' => 1,
+                'sup_finished' => 2
+            ])
+            ->scalar();
 
         return $this->render('user_details', [
             'user' => $user,
