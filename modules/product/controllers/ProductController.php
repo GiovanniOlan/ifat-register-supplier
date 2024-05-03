@@ -62,7 +62,7 @@ class ProductController extends Controller
                 $supplier->save();
 
                 Yii::$app->session->setFlash('success', '¡El registro se ha finalizado correctamente!');
-                return $this->redirect(['/supplier/search']);
+                return $this->redirect(['/supplier/status/index', 'id' => $id]);
             } else {
                 Yii::$app->session->setFlash('error', 'Proveedor no encontrado para este usuario.');
             }

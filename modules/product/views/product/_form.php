@@ -91,9 +91,9 @@ $this->title = 'Agregar Producto';
             <div class="col-xxl-4 col-lg-4 col-sm-12">
                 <div class="mb-md-4 mb-3 custom-form">
                     <div class="custom-input-product-form">
-                        <label for="productLine" class="form-label">Línea:</label>
+                        <label for="productLine" class="form-label">Categoría:</label>
                         <select name="CatLineAssignment[clias_fkline]" id="productLine" class="form-select" style="border: none;">
-                            <option value="" disabled selected>Seleccione una línea de producto</option>
+                            <option value="" disabled selected>Seleccione una categoría </option>
                             <?php foreach ($lineOptions as $key => $value) : ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php endforeach; ?>
